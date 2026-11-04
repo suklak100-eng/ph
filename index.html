@@ -2,468 +2,475 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>NEXUS STUDIO | Boutique Smartphone Showroom & In-Store Pickup</title>
-  <meta name="description" content="The boutique smartphone showroom on MG Road. Reserve online with zero advance payment, test drive in-store, and pick up in 30 minutes.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechNova | Official Flagship Smartphones & Mobile Experience</title>
+  <meta name="description" content="Discover the latest smartphones, new arrivals, and unbeatable deals at TechNova. Better Tech. Brighter Tomorrow.">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>">
-  <meta name="theme-color" content="#08090d">
-
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%232563eb%22/><text y=%22.75em%22 x=%2250%25%22 text-anchor=%22middle%22 font-size=%2260%22 font-family=%22sans-serif%22 font-weight=%22bold%22 fill=%22white%22>T</text></svg>">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
-  <!-- Minimalist Top Navbar -->
-  <header class="top-navbar">
-    <div class="container nav-wrapper">
+  <!-- Top Header Bar (Exact match to TechNova Mockup) -->
+  <header class="top-header">
+    <div class="container header-inner">
       
       <!-- Brand Logo -->
-      <a href="#" class="brand-block">
-        <div class="brand-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+      <a href="#" class="brand-logo-wrap">
+        <div class="brand-hexagon-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
           </svg>
         </div>
-        <div>
-          <span class="brand-name">NEXUS STUDIO</span>
-          <span class="brand-sub">MG Road Showroom • Floor 2</span>
-        </div>
+        <span class="brand-logo-text">TechNova</span>
       </a>
 
-      <!-- Center Search Field -->
-      <div class="nav-search-wrap">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" id="navSearchInput" class="nav-search-input" placeholder="Search by model, Snapdragon, 5G, 200MP...">
+      <!-- Center Navigation Links -->
+      <nav>
+        <ul class="header-nav-list">
+          <li class="header-nav-item active"><a href="#">Home</a></li>
+          <li class="header-nav-item"><a href="#popular">Shop <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a></li>
+          <li class="header-nav-item"><a href="#brands">Categories</a></li>
+          <li class="header-nav-item"><a href="#deals">Deals</a></li>
+          <li class="header-nav-item"><a href="#about">About</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right Action Icons -->
+      <div class="header-actions">
+        <!-- Search -->
+        <button class="header-icon-btn" title="Search smartphones">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+
+        <!-- Wishlist -->
+        <button class="header-icon-btn" title="Wishlist">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </button>
+
+        <!-- Cart with '3' Badge -->
+        <button class="header-icon-btn" id="headerCartBtn" title="Your Cart (3 items)" onclick="openMobileAppScreen('cart');">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span class="cart-counter-badge" id="headerCartCount">3</span>
+        </button>
+
+        <!-- User Profile Avatar -->
+        <div class="user-avatar-pill" title="Sarah Ahmed">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Sarah Ahmed">
+        </div>
       </div>
 
-      <!-- Nav Actions (Explore Menu Button + Passes) -->
-      <div class="nav-actions-wrap">
-        
-        <!-- Unified Explore Menu Button (Consolidates all navigation links) -->
-        <button id="exploreMenuBtn" class="btn-explore-menu" title="Open Categories & Showroom Navigation">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-          <span>Explore Menu</span>
-        </button>
-
-        <!-- My Reservations Pass Button -->
-        <button class="btn-reservations-pill" onclick="openMyBookingsModal();" title="View my reserved phone passes">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-          <span>My Passes</span>
-          <span id="reservationsCountBadge" class="reservation-count-badge" style="display: none;">0</span>
-        </button>
-
-        <!-- Sound Synthesizer Toggle -->
-        <button id="soundToggleBtn" class="icon-btn active" title="Toggle tactile sound effects">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-        </button>
-
-      </div>
     </div>
   </header>
 
-  <!-- Unified Slide-Out Explore Drawer -->
-  <div class="explore-drawer-overlay" id="exploreDrawerOverlay">
-    <div class="explore-drawer-panel">
-      <div class="drawer-header">
-        <h3>Showroom Directory</h3>
-        <button class="modal-close-btn" id="closeExploreDrawer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
-
-      <div class="drawer-section-title">Shop by Budget Tier</div>
-      <ul class="drawer-nav-list">
-        <li class="drawer-nav-item">
-          <a href="#catalog" onclick="selectBudget('all');">
-            <span>All Showroom Phones</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </li>
-        <li class="drawer-nav-item">
-          <a href="#catalog" onclick="selectBudget('under-15k');">
-            <span>Budget Champions (Under ₹15,000)</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </li>
-        <li class="drawer-nav-item">
-          <a href="#catalog" onclick="selectBudget('15k-30k');">
-            <span>Value Segment (₹15,000 - ₹30,000)</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </li>
-        <li class="drawer-nav-item">
-          <a href="#catalog" onclick="selectBudget('30k-60k');">
-            <span>Premium Mid-Range (₹30,000 - ₹60,000)</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </li>
-        <li class="drawer-nav-item">
-          <a href="#catalog" onclick="selectBudget('flagship');">
-            <span>Elite Flagships (₹60,000+)</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </li>
-      </ul>
-
-      <div class="drawer-section-title">Showroom Experience & Tools</div>
-      <ul class="drawer-nav-list">
-        <li class="drawer-nav-item">
-          <a href="#tradeIn">
-            <span>Instant Old Phone Trade-In Estimator</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </li>
-        <li class="drawer-nav-item">
-          <a href="#storeLocation">
-            <span>MG Road Showroom Hours & Directions</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </li>
-        <li class="drawer-nav-item">
-          <a href="javascript:void(0)" onclick="openMyBookingsModal();">
-            <span>View My Active Hold Passes</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </li>
-      </ul>
-
-      <div style="margin-top: auto; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.2rem;">
-        <div style="font-weight: 700; color: #fff; font-size: 0.95rem; margin-bottom: 0.3rem;">🏬 MG Road Experience Studio</div>
-        <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 0.5rem;">
-          Lock any smartphone online for ₹0 advance. Pick it up in 30 minutes at our counter after personal hands-on testing.
-        </div>
-        <span style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700;">Open Today: 10:00 AM - 09:30 PM</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ultra-Clean, Spacious Hero Section (Apple & Nothing Style) -->
-  <section class="hero-luxury-stage">
+  <!-- Hero Banner: Deep Navy Gradient iPhone 16 Pro Spotlight -->
+  <section class="hero-banner-section">
     <div class="container">
-      
-      <!-- Big Bold Typography -->
-      <h1 class="hero-headline">
-        Touch. Feel. <span class="gradient-word">Take Home.</span>
-      </h1>
+      <div class="hero-banner-card">
+        
+        <!-- Hero Left Content -->
+        <div class="hero-left-content">
+          <div class="hero-new-arrival-tag">New Arrival</div>
+          <h1 class="hero-phone-title">iPhone 16 Pro</h1>
+          <div class="hero-phone-subheading">More Power. More Possibilities.</div>
+          <p class="hero-phone-desc">
+            Discover the latest iPhone with advanced camera, longer battery life and a stunning design.
+          </p>
+          <a href="javascript:void(0)" class="btn-shop-now" onclick="openProductDetail('iphone-16-pro');">
+            <span>Shop Now</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
 
-      <p class="hero-subheading">
-        The boutique smartphone showroom on MG Road. Lock your phone online with ₹0 advance — test-drive the device in our studio and pick it up in 30 minutes.
-      </p>
+          <!-- Carousel Dots Bottom Left (4 dots, 1st active) -->
+          <div class="hero-carousel-dots">
+            <div class="carousel-dot active"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+          </div>
+        </div>
 
-      <!-- Two Clean Action Buttons -->
-      <div class="hero-actions-center">
-        <a href="#catalog" class="btn-hero-primary" onclick="window.soundEngine.playClick();">
-          <span>Explore Showroom Stock ↓</span>
-        </a>
-        <a href="#storeLocation" class="btn-hero-secondary" onclick="window.soundEngine.playTick();">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          <span>MG Road Timings & Map</span>
-        </a>
-      </div>
-
-      <!-- Center Floating Unboxed Phone Showcase -->
-      <div class="hero-phone-showcase">
-        <div class="hero-phone-visual-wrap">
+        <!-- Hero Right iPhone 16 Pro Render -->
+        <div class="hero-right-stage">
           <img 
-            id="heroFeaturedImg"
-            src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80" 
-            alt="Apple iPhone 16 Flagship Showcase" 
-            class="hero-featured-image"
+            src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=800&q=80" 
+            alt="Apple iPhone 16 Pro Natural Titanium" 
+            class="hero-phone-render"
           />
 
-          <!-- Minimalist Floating Tag -->
-          <div class="hero-phone-floating-tag">
-            <span class="pulse-dot-green"></span>
-            <span class="hero-tag-text" id="heroTagText">Apple iPhone 16 • Shelf A-01</span>
-            <span class="hero-tag-price" id="heroTagPrice">₹74,999</span>
+          <!-- Translucent Circular Nav Arrows on Bottom Right -->
+          <div class="hero-nav-arrows">
+            <button class="arrow-circle-btn" title="Previous Slide">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button class="arrow-circle-btn" title="Next Slide">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
           </div>
         </div>
 
-        <!-- Interactive Color Dots for Hero Phone -->
-        <div class="hero-color-picker">
-          <button class="hero-color-dot active" style="background-color: #26282b;" title="Black Titanium" data-hero-img="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80" data-hero-title="Apple iPhone 16 (Black) • Shelf A-01" data-hero-price="₹74,999"></button>
-          <button class="hero-color-dot" style="background-color: #3b5898;" title="Ultramarine" data-hero-img="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=800&q=80" data-hero-title="Apple iPhone 16 (Ultramarine) • Shelf A-01" data-hero-price="₹74,999"></button>
-          <button class="hero-color-dot" style="background-color: #4f7d79;" title="Teal" data-hero-img="https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=800&q=80" data-hero-title="Apple iPhone 16 (Teal) • Shelf A-01" data-hero-price="₹74,999"></button>
-          <button class="hero-color-dot" style="background-color: #e0b4b8;" title="Pink" data-hero-img="https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=800&q=80" data-hero-title="Apple iPhone 16 (Pink) • Shelf A-01" data-hero-price="₹74,999"></button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Clean 3-Pillar Trust Strip (Spacious, Uncluttered) -->
-  <section class="trust-strip-section">
-    <div class="container trust-pillars-grid">
-      <div class="trust-pillar-card">
-        <div class="trust-icon-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-        </div>
-        <h3>₹0 Advance In-Store Hold</h3>
-        <p>Book any phone online with zero advance money. We hold the phone for 48 hours at our counter for you to test and inspect.</p>
-      </div>
-
-      <div class="trust-pillar-card">
-        <div class="trust-icon-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-        </div>
-        <h3>Unboxed Live Experience Tables</h3>
-        <p>Every flagship phone is unboxed on open demo islands. Test the camera, benchmark the processor, and test speakers before paying.</p>
-      </div>
-
-      <div class="trust-pillar-card">
-        <div class="trust-icon-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-        </div>
-        <h3>15-Min Spot Trade-In & Data Migration</h3>
-        <p>Hand over your old device for an instant cash offset. Our counter technicians transfer your WhatsApp and contacts for free.</p>
       </div>
     </div>
   </section>
 
-  <!-- Clean Brand Selector Rail -->
-  <section class="brand-rail-section">
+  <!-- 4-Pillar Features Strip (Matches TechNova Mockup) -->
+  <section class="features-strip-section">
     <div class="container">
-      <div class="brand-pills-scroll" id="brandPillsScroll">
-        <button class="brand-btn active" data-brand="all">All Brands</button>
-        <button class="brand-btn" data-brand="Apple">Apple</button>
-        <button class="brand-btn" data-brand="Samsung">Samsung</button>
-        <button class="brand-btn" data-brand="OnePlus">OnePlus</button>
-        <button class="brand-btn" data-brand="Vivo">Vivo</button>
-        <button class="brand-btn" data-brand="Nothing">Nothing</button>
-        <button class="brand-btn" data-brand="Motorola">Motorola</button>
-        <button class="brand-btn" data-brand="Xiaomi">Xiaomi</button>
-        <button class="brand-btn" data-brand="Realme">Realme</button>
+      <div class="features-strip-card">
+        <div class="feature-col-item">
+          <div class="feature-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          </div>
+          <div class="feature-text-block">
+            <h4>Free Shipping</h4>
+            <p>On orders over $50</p>
+          </div>
+        </div>
+
+        <div class="feature-col-item">
+          <div class="feature-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="feature-text-block">
+            <h4>Secure Payment</h4>
+            <p>100% secure</p>
+          </div>
+        </div>
+
+        <div class="feature-col-item">
+          <div class="feature-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+          </div>
+          <div class="feature-text-block">
+            <h4>24/7 Support</h4>
+            <p>We're here to help</p>
+          </div>
+        </div>
+
+        <div class="feature-col-item">
+          <div class="feature-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </div>
+          <div class="feature-text-block">
+            <h4>Easy Returns</h4>
+            <p>30-day policy</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Flipkart & Meesho Inspired Catalog Section -->
-  <section class="catalog-section" id="catalog">
+  <!-- Popular Smartphones Section (Matches TechNova Mockup Row 1) -->
+  <section class="section-wrapper" id="popular">
     <div class="container">
       
-      <!-- Clean Catalog Header & Filter Bar -->
-      <div class="catalog-header-clean">
-        
-        <!-- Budget Filters (Placed cleanly in catalog where they belong) -->
-        <div class="budget-filter-group" id="budgetFilters">
-          <button class="budget-filter-btn active" data-budget="all">All Budgets</button>
-          <button class="budget-filter-btn" data-budget="under-15k">Under ₹15,000</button>
-          <button class="budget-filter-btn" data-budget="15k-30k">₹15,000 - ₹30,000</button>
-          <button class="budget-filter-btn" data-budget="30k-60k">₹30,000 - ₹60,000</button>
-          <button class="budget-filter-btn" data-budget="flagship">Flagships (₹60,000+)</button>
+      <!-- Section Header -->
+      <div class="section-head-bar">
+        <div>
+          <h2 class="section-title-large">Popular Smartphones</h2>
+          <p class="section-subtitle-small">Discover the most loved devices by our customers.</p>
         </div>
-
-        <!-- View Mode & Sort Controls -->
-        <div class="catalog-view-sort-group">
-          <div class="view-mode-toggle">
-            <button id="viewModeList" class="view-mode-btn active" title="Detailed Flipkart list view">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-              <span>List</span>
-            </button>
-            <button id="viewModeGrid" class="view-mode-btn" title="Compact grid view">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-              <span>Grid</span>
-            </button>
-          </div>
-
-          <select id="sortSelect" class="sort-select">
-            <option value="featured">Featured</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="rating">Top Rated</option>
-          </select>
-        </div>
-
+        <a href="#popular" class="view-all-link">
+          <span>View All</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
       </div>
 
-      <!-- Phone Cards Dynamic Container (Flipkart List / Grid) -->
-      <div id="phoneContainer" class="phone-list-container">
+      <!-- 4 Cards Grid -->
+      <div class="products-quad-grid" id="popularPhonesGrid">
         <!-- Rendered by scripts/app.js -->
       </div>
 
     </div>
   </section>
 
-  <!-- Spot Trade-In & Exchange Estimator -->
-  <section class="trade-in-strip-section" id="tradeIn">
-    <div class="container trade-in-flex">
-      <div>
-        <div style="font-size: 0.8rem; color: var(--accent-green); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
-          ● Instant Counter Trade-In
-        </div>
-        <h2 style="font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 0.8rem; letter-spacing: -0.02em;">
-          Trade In Old Phone.<br>Upgrade Without Courier Hassles.
-        </h2>
-        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-          Bring your old smartphone to our MG Road showroom. Our diagnostic desk tests the hardware in 15 minutes, adjusts the credit value against your new phone invoice, and transfers all your personal data for free.
-        </p>
-        <div style="display: flex; gap: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
-          <div>✓ Instant Cash Value Offset</div>
-          <div>✓ Free WhatsApp & Photo Backup</div>
-          <div>✓ Military-grade Secure Wipe</div>
-        </div>
-      </div>
-
-      <!-- Trade-In Calculator Box -->
-      <div class="trade-calc-panel">
-        <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 1.2rem;">Quick Trade-In Credit Calculator</h3>
-        
-        <div style="margin-bottom: 1rem;">
-          <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.4rem;">Select Your Current Phone</label>
-          <select id="tradeDeviceSelect" style="width: 100%; background: #1a202c; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.7rem 0.9rem; color: #fff; outline: none; font-size: 0.9rem;">
-            <option value="iphone-13-15" data-max="48000">Apple iPhone 13 / 14 / 15 Series (Up to ₹48,000)</option>
-            <option value="iphone-11-12" data-max="26000">Apple iPhone 11 / 12 Series (Up to ₹26,000)</option>
-            <option value="samsung-s22-24" data-max="42000">Samsung Galaxy S22 / S23 / S24 Series (Up to ₹42,000)</option>
-            <option value="oneplus-10-12" data-max="28000">OnePlus 10 / 11 / 12 Series (Up to ₹28,000)</option>
-            <option value="budget-midrange" data-max="14000">Xiaomi / Realme / Moto 5G Models (Up to ₹14,000)</option>
-          </select>
-        </div>
-
-        <div style="margin-bottom: 1.5rem;">
-          <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.4rem;">Device Physical Condition</label>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
-            <button class="budget-filter-btn cond-btn active" data-factor="1.0" style="text-align: center; border-radius: var(--radius-sm); padding: 0.6rem 0.3rem;">Flawless</button>
-            <button class="budget-filter-btn cond-btn" data-factor="0.8" style="text-align: center; border-radius: var(--radius-sm); padding: 0.6rem 0.3rem;">Minor Scratches</button>
-            <button class="budget-filter-btn cond-btn" data-factor="0.55" style="text-align: center; border-radius: var(--radius-sm); padding: 0.6rem 0.3rem;">Heavy Scratches</button>
-          </div>
-        </div>
-
-        <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: var(--radius-md); padding: 1.2rem; text-align: center;">
-          <span style="font-size: 0.78rem; color: var(--accent-green); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; display: block; margin-bottom: 0.2rem;">Estimated Showroom Trade-In Credit</span>
-          <strong id="tradeOutputValue" style="font-size: 2rem; font-weight: 800; color: #ffffff;">₹48,000</strong>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Showroom Physical Location Section -->
-  <section class="container" id="storeLocation" style="padding: 4.5rem 0;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center;">
-      <div>
-        <div style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
-          ● MG Road Experience Studio
-        </div>
-        <h2 style="font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 1rem;">Experience Phones with Your Own Hands</h2>
-        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem;">
-          At Nexus Studio, every device is unboxed and available on our live experience tables. You can test camera shutter speed, run benchmarks, check speaker quality, and make a confident decision.
-        </p>
-
-        <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.92rem; color: var(--text-primary);">
-          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-            <svg style="color: var(--accent-cyan); flex-shrink: 0; margin-top: 0.2rem;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <div><strong>Location:</strong> Shop #204, Floor 2, Apex Grand Arcade, MG Road (Opposite Metro Gate 3)</div>
-          </div>
-          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-            <svg style="color: var(--accent-cyan); flex-shrink: 0; margin-top: 0.2rem;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <div><strong>Store Timings:</strong> 10:00 AM - 09:30 PM (Open all 7 days including Sunday)</div>
-          </div>
-          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-            <svg style="color: var(--accent-cyan); flex-shrink: 0; margin-top: 0.2rem;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            <div><strong>Showroom Help Desk:</strong> +91 98765 43210 (WhatsApp and Direct Call)</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Action Card -->
-      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2.2rem; display: flex; flex-direction: column; gap: 1.2rem;">
-        <h3 style="font-size: 1.25rem; font-weight: 800; color: #fff;">Need Directions to Our Counter?</h3>
-        <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
-          Free valet parking is available in the basement for all registered showroom visitors.
-        </p>
-        <div style="display: flex; gap: 0.8rem;">
-          <a href="https://maps.google.com" target="_blank" class="btn-primary-reserve" style="flex: 1; text-decoration: none; margin-top: 0;">
-            <span>Get Google Maps Directions</span>
-          </a>
-          <a href="https://wa.me/919876543210" target="_blank" class="btn-explore-menu" style="display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 0.7rem 1.2rem;">
-            <span>WhatsApp</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Reservation Pass Modal -->
-  <div class="modal-overlay" id="reservationModal">
-    <div class="reservation-modal-box">
-      <button class="modal-close-btn" id="modalCloseBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-      <div id="reservationModalContent">
-        <!-- Rendered dynamically by scripts/app.js -->
-      </div>
-    </div>
-  </div>
-
-  <!-- My Bookings Modal -->
-  <div class="modal-overlay" id="myBookingsModal">
-    <div class="reservation-modal-box">
-      <button class="modal-close-btn" onclick="closeMyBookingsModal();">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-      <div style="margin-bottom: 1.5rem;">
-        <h3 style="font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem;">My In-Store Hold Passes</h3>
-        <p style="font-size: 0.85rem; color: var(--text-secondary);">Your active reservations and counter QR pickup codes.</p>
-      </div>
-      <div id="myBookingsList"></div>
-    </div>
-  </div>
-
-  <!-- Minimalist Clean Footer -->
-  <footer class="main-footer">
+  <!-- Limited Time Offer Banner (Up to 30% Off) -->
+  <section class="offer-banner-section">
     <div class="container">
-      <div class="footer-top-grid">
-        <div class="footer-col">
-          <div class="brand-block" style="margin-bottom: 0.8rem;">
-            <div class="brand-icon" style="width: 32px; height: 32px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-            </div>
-            <span class="brand-name" style="font-size: 1.05rem;">NEXUS STUDIO</span>
+      <div class="offer-banner-card">
+        
+        <div class="offer-left-box">
+          <span class="tag-offer">Limited Time Offer</span>
+          <h2>Up to 30% Off</h2>
+          <p>On Selected Smartphones</p>
+          <a href="#deals" class="btn-shop-deals">
+            <span>Shop Deals</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+        </div>
+
+        <div class="offer-right-box">
+          <img 
+            src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80" 
+            alt="Smartphones Fan" 
+            class="offer-phones-fan-img"
+          />
+          <div class="script-text-smarter">Better Faster Smarter ♡</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop by Brand Section (Matches TechNova Mockup) -->
+  <section class="section-wrapper" id="brands">
+    <div class="container">
+      
+      <div class="section-head-bar">
+        <div>
+          <h2 class="section-title-large">Shop by Brand</h2>
+        </div>
+        <a href="#brands" class="view-all-link">
+          <span>View All</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+      </div>
+
+      <!-- 6 Brand Cards Grid -->
+      <div class="brands-row-grid">
+        <!-- Apple -->
+        <a href="#popular" class="brand-card-item">
+          <div class="brand-logo-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 170 170" fill="currentColor">
+              <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.67-7.81-11.96-14.34-6.41-9.78-11.53-20.9-15.36-33.35-3.83-12.45-5.74-24.31-5.74-35.58 0-14.78 3.73-26.79 11.19-36.03 7.46-9.24 16.63-13.97 27.5-14.2 4.99 0 10.35 1.34 16.08 4.02 5.73 2.68 9.53 4.08 11.4 4.2 1.5 0 5.37-1.44 11.61-4.32 6.24-2.88 11.75-4.17 16.53-3.86 12.24.62 22.12 5.05 29.64 13.29-10.74 6.52-16.01 15.58-15.82 27.18.2 9.06 3.63 16.71 10.3 22.95 6.66 6.24 14.51 9.94 23.54 11.1-2.47 7.4-5.37 14.71-8.71 21.94zM119.22 33.15c0-7.39 2.65-14.2 7.95-20.43 5.3-6.23 11.77-10.22 19.41-11.97.2 1.37.3 2.6.3 3.69 0 7.39-2.73 14.26-8.2 20.61-5.47 6.35-12.01 10.25-19.62 11.7-.12-1.25-.18-2.4-.18-3.6z"/>
+            </svg>
           </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
-            The boutique smartphone showroom on MG Road. Zero courier anxiety. Lock online, test-drive in-store, and walk away with your new phone in 30 minutes.
-          </p>
+          <span class="brand-title-label">Apple</span>
+        </a>
+
+        <!-- Samsung -->
+        <a href="#popular" class="brand-card-item">
+          <div class="brand-logo-icon-wrap">
+            <span style="font-weight: 800; font-size: 0.95rem; letter-spacing: 0.08em; color: #1428a0;">SAMSUNG</span>
+          </div>
+          <span class="brand-title-label">Samsung</span>
+        </a>
+
+        <!-- Google -->
+        <a href="#popular" class="brand-card-item">
+          <div class="brand-logo-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.24v3.15C3.26 21.36 7.33 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.24C.45 8.16 0 9.97 0 12s.45 3.84 1.24 5.42l4.04-3.15z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.24 6.58l4.04 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            </svg>
+          </div>
+          <span class="brand-title-label">Google</span>
+        </a>
+
+        <!-- OnePlus -->
+        <a href="#popular" class="brand-card-item">
+          <div class="brand-logo-icon-wrap">
+            <div style="background: #eb0028; color: #fff; font-weight: 800; font-size: 0.75rem; padding: 0.15rem 0.4rem; border-radius: 4px;">1+</div>
+          </div>
+          <span class="brand-title-label">OnePlus</span>
+        </a>
+
+        <!-- Xiaomi -->
+        <a href="#popular" class="brand-card-item">
+          <div class="brand-logo-icon-wrap">
+            <div style="background: #ff6900; color: #fff; font-weight: 800; font-size: 0.75rem; padding: 0.15rem 0.35rem; border-radius: 4px;">mi</div>
+          </div>
+          <span class="brand-title-label">Xiaomi</span>
+        </a>
+
+        <!-- realme -->
+        <a href="#popular" class="brand-card-item">
+          <div class="brand-logo-icon-wrap">
+            <span style="background: #ffc915; color: #000; font-weight: 800; font-size: 0.72rem; padding: 0.15rem 0.4rem; border-radius: 4px;">realme</span>
+          </div>
+          <span class="brand-title-label">realme</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Best Deals Section (Matches TechNova Mockup Row 2) -->
+  <section class="section-wrapper" id="deals">
+    <div class="container">
+      
+      <div class="section-head-bar">
+        <div>
+          <h2 class="section-title-large">Best Deals</h2>
+          <p class="section-subtitle-small">Top offers, limited time only.</p>
+        </div>
+        <a href="#deals" class="view-all-link">
+          <span>View All</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+      </div>
+
+      <!-- 4 Best Deals Cards -->
+      <div class="products-quad-grid" id="bestDealsGrid">
+        <!-- Rendered by scripts/app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Stay Connected Newsletter Banner (Matches TechNova Mockup) -->
+  <section class="newsletter-banner-section">
+    <div class="container">
+      <div class="newsletter-card">
+        
+        <div class="newsletter-left">
+          <h3>Stay Connected</h3>
+          <p>Get the latest updates, offers and new arrivals.</p>
+          <form class="newsletter-input-group" onsubmit="event.preventDefault(); alert('Subscribed to TechNova VIP Newsletter!');">
+            <input type="email" required placeholder="Your email address">
+            <button type="submit" class="newsletter-btn-arrow" title="Subscribe">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </form>
         </div>
 
-        <div class="footer-col">
-          <h4>Popular Segments</h4>
+        <div class="newsletter-right">
+          <img 
+            src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=700&q=80" 
+            alt="Dual iPhones" 
+            class="newsletter-phones-img"
+          />
+          <div class="script-text-awaits">Your Next Phone Awaits ♡</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Clean White Footer (Matches TechNova Mockup) -->
+  <footer class="main-footer-white" id="about">
+    <div class="container">
+      
+      <div class="footer-columns-grid">
+        <!-- Brand Summary -->
+        <div class="footer-brand-summary">
+          <a href="#" class="brand-logo-wrap" style="margin-bottom: 0.5rem;">
+            <div class="brand-hexagon-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <span class="brand-logo-text">TechNova</span>
+          </a>
+          <p>Better Tech. Brighter Tomorrow.</p>
+          
+          <!-- Social Circles -->
+          <div class="social-links-strip">
+            <a href="#" class="social-circle-link" title="Facebook">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="#" class="social-circle-link" title="Instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="#" class="social-circle-link" title="YouTube">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#fff"></polygon></svg>
+            </a>
+            <a href="#" class="social-circle-link" title="TikTok">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-nav-col">
+          <h4>Quick Links</h4>
           <ul>
-            <li><a href="#catalog" onclick="selectBudget('flagship');">Apple iPhone 16 Series</a></li>
-            <li><a href="#catalog" onclick="selectBudget('flagship');">Samsung Galaxy S24 Ultra</a></li>
-            <li><a href="#catalog" onclick="selectBudget('30k-60k');">OnePlus 12R & Vivo V40 Pro</a></li>
-            <li><a href="#catalog" onclick="selectBudget('under-15k');">5G Phones Under ₹15,000</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#popular">Shop</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#about">Contact</a></li>
           </ul>
         </div>
 
-        <div class="footer-col">
-          <h4>Showroom Services</h4>
+        <!-- Categories -->
+        <div class="footer-nav-col">
+          <h4>Categories</h4>
           <ul>
-            <li><a href="#tradeIn">Spot Phone Exchange</a></li>
-            <li><a href="#storeLocation">Free Data Migration</a></li>
-            <li><a href="#storeLocation">Zero Cost Bank EMI</a></li>
-            <li><a href="#storeLocation">Free Screen Protector Fitting</a></li>
+            <li><a href="#popular">iPhone</a></li>
+            <li><a href="#popular">Samsung</a></li>
+            <li><a href="#popular">Google Pixel</a></li>
+            <li><a href="#popular">OnePlus</a></li>
+            <li><a href="#popular">Accessories</a></li>
           </ul>
         </div>
 
-        <div class="footer-col">
-          <h4>Showroom Contact</h4>
-          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Shop #204, Floor 2, Apex Grand Arcade, MG Road</p>
-          <p style="font-size: 0.85rem; color: var(--accent-cyan); font-weight: 700;">Phone: +91 98765 43210</p>
-          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem;">10:00 AM - 09:30 PM (All 7 Days)</p>
+        <!-- Customer Service -->
+        <div class="footer-nav-col">
+          <h4>Customer Service</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="javascript:void(0)" onclick="openMobileAppScreen('track');">Track Order</a></li>
+          </ul>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="footer-nav-col">
+          <h4>Payment Methods</h4>
+          <div class="payment-badges-row">
+            <span class="payment-badge-pill">VISA</span>
+            <span class="payment-badge-pill">Mastercard</span>
+            <span class="payment-badge-pill">PayPal</span>
+            <span class="payment-badge-pill">Pay</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Line -->
+      <div class="footer-bottom-line">
+        <div>© 2026 TechNova. All rights reserved.</div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
         </div>
       </div>
 
-      <div style="border-top: 1px solid var(--border-subtle); padding-top: 1.8rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap; gap: 1rem;">
-        <div>© 2026 Nexus Phone Studio. All rights reserved. In-Store Pickup Experience.</div>
-        <div>Minimalist luxury craft • 100% Client-Side Ready</div>
-      </div>
     </div>
   </footer>
+
+  <!-- =========================================================================
+       INTERACTIVE MOBILE APP SHEETS (MATCHES THE 6 SCREENS FROM USER MOCKUP)
+       1. Product Detail Screen
+       2. Your Cart (3) Screen
+       3. Checkout (Shipping Address)
+       4. Payment Method Screen
+       5. Order Placed Successfully Screen
+       6. Track Your Order Screen
+       ========================================================================= -->
+  <div class="modal-backdrop-screen" id="mobileAppModal">
+    <div class="phone-mockup-frame">
+      
+      <!-- iOS Notch & Status Bar -->
+      <div class="phone-ios-notch-bar">
+        <span>9:41</span>
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor"><path d="M0 8.5h3.5v3.5H0zm4.5-3H8v6.5H4.5zm4.5-3h3.5v9.5H9zm4.5-2.5H17v12h-3.5z"/></svg>
+          <svg width="14" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+          <svg width="18" height="10" viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="3" y="3" width="13" height="6" rx="1.5"/></svg>
+        </div>
+      </div>
+
+      <!-- Phone Screen Dynamic View Body -->
+      <div class="phone-screen-body" id="mobileScreenContent">
+        <!-- Rendered by scripts/app.js -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating Mobile App Launcher Pill -->
+  <div class="floating-mode-pill" onclick="openMobileAppScreen('detail');">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+    <span>Open Mobile Mockup Flow</span>
+  </div>
 
   <!-- Scripts -->
   <script src="scripts/phones-data.js"></script>
   <script src="scripts/sound-fx.js"></script>
-  <script src="scripts/qr-generator.js"></script>
   <script src="scripts/app.js"></script>
 </body>
 </html>

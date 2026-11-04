@@ -1,738 +1,602 @@
 /**
- * NEXUS PHONE STUDIO - Core Application Engine
- * Minimalist luxury craft, Flipkart-inspired specifications,
- * brand & budget filtering, in-store pickup reservations with QR passes.
+ * TECHNOVA - Application Engine & Interactive Mobile Mockup Flow
+ * Matches the TechNova UI Mockup sheet with 100% fidelity.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Application State
-  const state = {
-    selectedBrand: 'all',
-    selectedBudgetTier: 'all',
-    searchQuery: '',
-    sortBy: 'featured',
-    viewMode: 'list', // 'list' (Flipkart style) or 'grid'
-    activeSelections: {}, // phoneId -> { colorIdx, storageIdx }
-    cartReservation: null
-  };
+  const data = window.TECHNOVA_DATA;
 
-  // Initialize Default Phone Selections
-  window.PHONE_INVENTORY.forEach(phone => {
-    state.activeSelections[phone.id] = {
-      colorIdx: 0,
-      storageIdx: 0
-    };
-  });
+  // State
+  let cartItems = [...data.initialCart];
+  let favorites = new Set();
+  let currentMobilePhone = data.popularPhones[0]; // iPhone 16 Pro by default
+  let mobileQuantity = 1;
+  let selectedColorIdx = 0;
 
   // DOM Elements
-  const phoneContainerEl = document.getElementById('phoneContainer');
-  const searchInputEl = document.getElementById('navSearchInput');
-  const sortSelectEl = document.getElementById('sortSelect');
-  const budgetFilterButtons = document.querySelectorAll('.budget-filter-btn');
-  const brandButtons = document.querySelectorAll('.brand-btn');
-  const exploreMenuBtn = document.getElementById('exploreMenuBtn');
-  const exploreDrawerOverlay = document.getElementById('exploreDrawerOverlay');
-  const closeExploreDrawerBtn = document.getElementById('closeExploreDrawer');
-  const soundToggleBtn = document.getElementById('soundToggleBtn');
-  const reservationModalEl = document.getElementById('reservationModal');
-  const reservationsCountBadge = document.getElementById('reservationsCountBadge');
-  const viewModeListBtn = document.getElementById('viewModeList');
-  const viewModeGridBtn = document.getElementById('viewModeGrid');
-
-  // Hero Showcase Elements
-  const heroFeaturedImg = document.getElementById('heroFeaturedImg');
-  const heroTagText = document.getElementById('heroTagText');
-  const heroTagPrice = document.getElementById('heroTagPrice');
-  const heroColorDots = document.querySelectorAll('.hero-color-dot');
+  const popularGrid = document.getElementById('popularPhonesGrid');
+  const bestDealsGrid = document.getElementById('bestDealsGrid');
+  const headerCartCount = document.getElementById('headerCartCount');
+  const mobileAppModal = document.getElementById('mobileAppModal');
+  const mobileScreenContent = document.getElementById('mobileScreenContent');
 
   // Currency Formatter
-  const formatINR = (num) => '₹' + Number(num).toLocaleString('en-IN');
+  const formatUSD = (val) => '$' + Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-  // =========================================================================
-  // HERO PHONE COLOR SWATCHES (INTERACTIVE ZERO-CLUTTER SPOTLIGHT)
-  // =========================================================================
-  heroColorDots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      window.soundEngine.playTick();
-      heroColorDots.forEach(d => d.classList.remove('active'));
-      dot.classList.add('active');
-
-      const imgUrl = dot.dataset.heroImg;
-      const title = dot.dataset.heroTitle;
-      const price = dot.dataset.heroPrice;
-
-      if (heroFeaturedImg && imgUrl) {
-        heroFeaturedImg.style.opacity = '0.3';
-        heroFeaturedImg.style.transform = 'scale(0.97)';
-        setTimeout(() => {
-          heroFeaturedImg.src = imgUrl;
-          heroFeaturedImg.style.opacity = '1';
-          heroFeaturedImg.style.transform = 'scale(1)';
-        }, 150);
-      }
-
-      if (heroTagText && title) heroTagText.textContent = title;
-      if (heroTagPrice && price) heroTagPrice.textContent = price;
-    });
-  });
-
-  // =========================================================================
-  // AUDIO TOGGLE
-  // =========================================================================
-  if (soundToggleBtn) {
-    soundToggleBtn.addEventListener('click', () => {
-      const isEnabled = window.soundEngine.toggle();
-      soundToggleBtn.classList.toggle('active', isEnabled);
-    });
-  }
-
-  // =========================================================================
-  // UNIFIED EXPLORE MENU DRAWER
-  // =========================================================================
-  const toggleExploreDrawer = (open) => {
-    if (open) {
-      window.soundEngine.playWhoosh();
-      exploreDrawerOverlay.classList.add('active');
-      exploreMenuBtn.classList.add('active');
-    } else {
-      window.soundEngine.playClick();
-      exploreDrawerOverlay.classList.remove('active');
-      exploreMenuBtn.classList.remove('active');
-    }
+  // Update header cart count
+  const updateCartBadge = () => {
+    const totalCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    if (headerCartCount) headerCartCount.textContent = totalCount;
   };
 
-  if (exploreMenuBtn) {
-    exploreMenuBtn.addEventListener('click', () => {
-      const isOpen = exploreDrawerOverlay.classList.contains('active');
-      toggleExploreDrawer(!isOpen);
-    });
-  }
-
-  if (closeExploreDrawerBtn) {
-    closeExploreDrawerBtn.addEventListener('click', () => toggleExploreDrawer(false));
-  }
-
-  if (exploreDrawerOverlay) {
-    exploreDrawerOverlay.addEventListener('click', (e) => {
-      if (e.target === exploreDrawerOverlay) toggleExploreDrawer(false);
-    });
-  }
-
-  document.querySelectorAll('.drawer-nav-item a').forEach(link => {
-    link.addEventListener('click', () => toggleExploreDrawer(false));
-  });
-
   // =========================================================================
-  // BRAND & BUDGET FILTERS
+  // RENDER POPULAR SMARTPHONES (Row 1 from TechNova Mockup)
   // =========================================================================
-  window.selectBudget = (budgetTier) => {
-    state.selectedBudgetTier = budgetTier;
-    budgetFilterButtons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.budget === budgetTier);
-    });
-    renderCatalog();
-  };
+  const renderPopularPhones = () => {
+    if (!popularGrid) return;
+    popularGrid.innerHTML = data.popularPhones.map(phone => {
+      const isFav = favorites.has(phone.id);
+      return `
+        <div class="product-item-card">
+          <div class="card-top-action-row">
+            ${phone.badge ? `<span class="pill-badge-bestseller">${phone.badge}</span>` : '<div></div>'}
+            <button class="card-fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${phone.id}', event)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
 
-  budgetFilterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      window.soundEngine.playTick();
-      window.selectBudget(btn.dataset.budget);
-    });
-  });
+          <div class="card-photo-stage" onclick="openProductDetail('${phone.id}')">
+            <img class="card-phone-image" src="${phone.image}" alt="${phone.name}">
+          </div>
 
-  brandButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      window.soundEngine.playTick();
-      brandButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.selectedBrand = btn.dataset.brand;
-      renderCatalog();
-    });
-  });
+          <div class="card-item-title" onclick="openProductDetail('${phone.id}')">${phone.name}</div>
+          <div class="card-item-storage">${phone.storage}</div>
 
-  // =========================================================================
-  // VIEW MODE SWITCHER (LIST vs GRID)
-  // =========================================================================
-  if (viewModeListBtn && viewModeGridBtn) {
-    viewModeListBtn.addEventListener('click', () => {
-      window.soundEngine.playTick();
-      state.viewMode = 'list';
-      viewModeListBtn.classList.add('active');
-      viewModeGridBtn.classList.remove('active');
-      renderCatalog();
-    });
+          <div class="card-item-price-row">
+            <span class="card-price-current">${formatUSD(phone.price)}</span>
+          </div>
 
-    viewModeGridBtn.addEventListener('click', () => {
-      window.soundEngine.playTick();
-      state.viewMode = 'grid';
-      viewModeGridBtn.classList.add('active');
-      viewModeListBtn.classList.remove('active');
-      renderCatalog();
-    });
-  }
+          <div class="card-item-rating">
+            <span class="star-icons-wrap">★★★★☆</span>
+            <span>${phone.rating} (${phone.reviewsCount})</span>
+          </div>
 
-  // Search & Sort Controls
-  if (searchInputEl) {
-    searchInputEl.addEventListener('input', (e) => {
-      state.searchQuery = e.target.value.trim().toLowerCase();
-      renderCatalog();
-    });
-  }
-
-  if (sortSelectEl) {
-    sortSelectEl.addEventListener('change', (e) => {
-      window.soundEngine.playTick();
-      state.sortBy = e.target.value;
-      renderCatalog();
-    });
-  }
-
-  // =========================================================================
-  // CATALOG RENDERING (FLIPKART / MEESHO SPECIFICATION STANDARD)
-  // =========================================================================
-  const renderCatalog = () => {
-    if (!phoneContainerEl) return;
-
-    // Filter Logic
-    let filtered = window.PHONE_INVENTORY.filter(phone => {
-      // Brand filter
-      const matchBrand = state.selectedBrand === 'all' || phone.brand.toLowerCase() === state.selectedBrand.toLowerCase();
-
-      // Budget filter
-      let matchBudget = true;
-      if (state.selectedBudgetTier === 'under-15k') {
-        matchBudget = phone.currentPrice <= 15000;
-      } else if (state.selectedBudgetTier === '15k-30k') {
-        matchBudget = phone.currentPrice > 15000 && phone.currentPrice <= 30000;
-      } else if (state.selectedBudgetTier === '30k-60k') {
-        matchBudget = phone.currentPrice > 30000 && phone.currentPrice <= 60000;
-      } else if (state.selectedBudgetTier === 'flagship') {
-        matchBudget = phone.currentPrice > 60000;
-      }
-
-      // Search filter
-      const matchSearch = 
-        phone.fullName.toLowerCase().includes(state.searchQuery) ||
-        phone.brand.toLowerCase().includes(state.searchQuery) ||
-        phone.highlights.some(h => h.toLowerCase().includes(state.searchQuery));
-
-      return matchBrand && matchBudget && matchSearch;
-    });
-
-    // Sorting
-    if (state.sortBy === 'price-low') {
-      filtered.sort((a, b) => a.currentPrice - b.currentPrice);
-    } else if (state.sortBy === 'price-high') {
-      filtered.sort((a, b) => b.currentPrice - a.currentPrice);
-    } else if (state.sortBy === 'rating') {
-      filtered.sort((a, b) => b.rating - a.rating);
-    }
-
-    if (filtered.length === 0) {
-      phoneContainerEl.innerHTML = `
-        <div style="text-align: center; padding: 4rem 1rem; color: var(--text-muted); width: 100%;">
-          <svg style="margin: 0 auto 1rem; color: var(--text-muted);" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem;">No Phones Match Current Filters</h3>
-          <p style="font-size: 0.9rem;">Try selecting 'All Brands' or resetting your budget filter.</p>
+          <button class="btn-card-add-cart" onclick="addToCart('${phone.id}')">
+            Add to Cart
+          </button>
         </div>
       `;
-      return;
-    }
-
-    // Set container class based on view mode
-    phoneContainerEl.className = state.viewMode === 'list' ? 'phone-list-container' : 'phone-grid-container';
-
-    if (state.viewMode === 'list') {
-      // Flipkart-style Comprehensive List View
-      phoneContainerEl.innerHTML = filtered.map(phone => {
-        const sel = state.activeSelections[phone.id];
-        const activeColor = phone.colors[sel.colorIdx];
-        const activeStorage = phone.storageOptions[sel.storageIdx];
-        const calculatedPrice = phone.currentPrice + activeStorage.priceOffset;
-        const calculatedMrp = phone.originalPrice + activeStorage.priceOffset;
-
-        return `
-          <div class="phone-list-card" data-phone-id="${phone.id}">
-            
-            <!-- Col 1: Product Photo & Color Swatches -->
-            <div class="card-image-col">
-              <img class="card-product-img" id="img-${phone.id}" src="${activeColor.image}" alt="${phone.fullName}" loading="lazy">
-              
-              <!-- Color Swatch Dots -->
-              <div class="color-dots-strip">
-                ${phone.colors.map((c, idx) => `
-                  <button 
-                    class="color-dot-btn ${sel.colorIdx === idx ? 'active' : ''}" 
-                    style="background-color: ${c.hex};" 
-                    title="${c.name}"
-                    data-phone="${phone.id}"
-                    data-color-idx="${idx}"
-                  ></button>
-                `).join('')}
-              </div>
-            </div>
-
-            <!-- Col 2: Specifications & Highlights (Flipkart Inspired) -->
-            <div class="card-details-col">
-              <a href="javascript:void(0)" class="card-title-link" onclick="openReservationModal('${phone.id}')">
-                ${phone.brand} ${phone.name} (${activeColor.name}, ${activeStorage.size.split('|')[0].trim()})
-              </a>
-
-              <div class="rating-badge-row">
-                <span class="green-rating-pill">
-                  ${phone.rating} ★
-                </span>
-                <span class="rating-counts-text">${phone.ratingsCount} Ratings & ${phone.reviewsCount} Reviews</span>
-              </div>
-
-              <!-- Storage Switcher Pills -->
-              <div style="display: flex; gap: 0.4rem; margin: 0.4rem 0;">
-                ${phone.storageOptions.map((opt, sIdx) => `
-                  <button 
-                    class="budget-filter-btn ${sel.storageIdx === sIdx ? 'active' : ''}" 
-                    style="padding: 0.2rem 0.55rem; font-size: 0.75rem;"
-                    data-phone="${phone.id}"
-                    data-storage-idx="${sIdx}"
-                  >
-                    ${opt.size.split('(')[0]}
-                  </button>
-                `).join('')}
-              </div>
-
-              <!-- Bullet Specifications List -->
-              <ul class="specs-bullet-list">
-                ${phone.highlights.slice(0, 4).map(hl => `<li>${hl}</li>`).join('')}
-                <li style="color: var(--accent-cyan); font-weight: 500;">${phone.warranty}</li>
-              </ul>
-
-              <!-- Live Showroom Location Tag -->
-              <div class="showroom-shelf-status">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <span>In-Store: <strong>${phone.showroomStock} Units Ready</strong> • ${phone.shelfLocation}</span>
-              </div>
-            </div>
-
-            <!-- Col 3: Pricing & Action -->
-            <div class="card-price-col">
-              <div class="price-main-row">
-                <span class="current-price-val" id="price-${phone.id}">${formatINR(calculatedPrice)}</span>
-                <span class="original-mrp-val" id="mrp-${phone.id}">${formatINR(calculatedMrp)}</span>
-                <span class="discount-badge-green">${phone.discountPercent}% off</span>
-              </div>
-
-              <span class="emi-note">No Cost EMI starts from <strong>${phone.emiStartsAt}</strong></span>
-              <span style="font-size: 0.78rem; color: #38bdf8; font-weight: 600; margin-bottom: 0.6rem;">Up to ₹18,000 Off on Exchange in Store</span>
-
-              <button class="btn-primary-reserve" onclick="openReservationModal('${phone.id}')">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                <span>Reserve for Store Pickup</span>
-              </button>
-            </div>
-
-          </div>
-        `;
-      }).join('');
-    } else {
-      // Grid View
-      phoneContainerEl.innerHTML = filtered.map(phone => {
-        const sel = state.activeSelections[phone.id];
-        const activeColor = phone.colors[sel.colorIdx];
-        const activeStorage = phone.storageOptions[sel.storageIdx];
-        const calculatedPrice = phone.currentPrice + activeStorage.priceOffset;
-
-        return `
-          <div class="phone-grid-card">
-            <div style="height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <img src="${activeColor.image}" style="max-height: 150px; max-width: 80%; object-fit: contain;" alt="${phone.name}">
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <span style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700; text-transform: uppercase;">${phone.brand}</span>
-              <span class="green-rating-pill">${phone.rating} ★</span>
-            </div>
-
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem;">${phone.name}</h3>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1rem;">${phone.highlights[0]} • ${phone.highlights[1]}</p>
-
-            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border-subtle);">
-              <div>
-                <div style="font-size: 1.35rem; font-weight: 800; color: #fff;">${formatINR(calculatedPrice)}</div>
-                <div style="font-size: 0.72rem; color: var(--accent-green); font-weight: 600;">Shelf ${phone.shelfLocation.split('•')[1] || 'Main'}</div>
-              </div>
-              <button class="btn-primary-reserve" style="width: auto; padding: 0.5rem 0.9rem;" onclick="openReservationModal('${phone.id}')">
-                <span>Reserve</span>
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // Color Swatch Listeners
-    phoneContainerEl.querySelectorAll('.color-dot-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.soundEngine.playTick();
-        const pId = btn.dataset.phone;
-        const cIdx = parseInt(btn.dataset.colorIdx, 10);
-        state.activeSelections[pId].colorIdx = cIdx;
-
-        const phone = window.PHONE_INVENTORY.find(p => p.id === pId);
-        const img = document.getElementById(`img-${pId}`);
-        if (img && phone) {
-          img.style.opacity = '0.3';
-          setTimeout(() => {
-            img.src = phone.colors[cIdx].image;
-            img.style.opacity = '1';
-          }, 150);
-        }
-
-        const parentStrip = btn.closest('.color-dots-strip');
-        if (parentStrip) {
-          parentStrip.querySelectorAll('.color-dot-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-        }
-      });
-    });
-
-    // Storage Switch Listeners
-    phoneContainerEl.querySelectorAll('[data-storage-idx]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.soundEngine.playClick();
-        const pId = btn.dataset.phone;
-        const sIdx = parseInt(btn.dataset.storageIdx, 10);
-        state.activeSelections[pId].storageIdx = sIdx;
-
-        const phone = window.PHONE_INVENTORY.find(p => p.id === pId);
-        const storageOpt = phone.storageOptions[sIdx];
-        const newPrice = phone.currentPrice + storageOpt.priceOffset;
-        const newMrp = phone.originalPrice + storageOpt.priceOffset;
-
-        const priceEl = document.getElementById(`price-${pId}`);
-        const mrpEl = document.getElementById(`mrp-${pId}`);
-        if (priceEl) priceEl.textContent = formatINR(newPrice);
-        if (mrpEl) mrpEl.textContent = formatINR(newMrp);
-
-        const parentRow = btn.parentElement;
-        if (parentRow) {
-          parentRow.querySelectorAll('[data-storage-idx]').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-        }
-      });
-    });
+    }).join('');
   };
 
   // =========================================================================
-  // IN-STORE PICKUP RESERVATION MODAL
+  // RENDER BEST DEALS (Row 2 from TechNova Mockup)
   // =========================================================================
-  window.openReservationModal = (phoneId) => {
-    window.soundEngine.playWhoosh();
-    const phone = window.PHONE_INVENTORY.find(p => p.id === phoneId);
+  const renderBestDeals = () => {
+    if (!bestDealsGrid) return;
+    bestDealsGrid.innerHTML = data.bestDeals.map(phone => {
+      const isFav = favorites.has(phone.id);
+      return `
+        <div class="product-item-card">
+          <div class="card-top-action-row">
+            <span class="pill-badge-discount">${phone.badge}</span>
+            <button class="card-fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${phone.id}', event)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+
+          <div class="card-photo-stage" onclick="openProductDetail('${phone.id}')">
+            <img class="card-phone-image" src="${phone.image}" alt="${phone.name}">
+          </div>
+
+          <div class="card-item-title" onclick="openProductDetail('${phone.id}')">${phone.name}</div>
+          <div class="card-item-storage">${phone.storage}</div>
+
+          <div class="card-item-price-row">
+            <span class="card-price-current">${formatUSD(phone.price)}</span>
+            <span class="card-price-struck">${formatUSD(phone.originalPrice)}</span>
+          </div>
+
+          <div class="card-item-rating">
+            <span class="star-icons-wrap">★★★★☆</span>
+            <span>${phone.rating} (${phone.reviewsCount})</span>
+          </div>
+
+          <button class="btn-card-add-cart" onclick="addToCart('${phone.id}')">
+            Add to Cart
+          </button>
+        </div>
+      `;
+    }).join('');
+  };
+
+  // Toggle favorite
+  window.toggleFavorite = (id, e) => {
+    e.stopPropagation();
+    if (window.soundEngine) window.soundEngine.playTick();
+    if (favorites.has(id)) {
+      favorites.delete(id);
+    } else {
+      favorites.add(id);
+    }
+    renderPopularPhones();
+    renderBestDeals();
+  };
+
+  // Add to cart action
+  window.addToCart = (id) => {
+    if (window.soundEngine) window.soundEngine.playClick();
+    const allPhones = [...data.popularPhones, ...data.bestDeals];
+    const phone = allPhones.find(p => p.id === id);
     if (!phone) return;
 
-    state.cartReservation = {
-      phone,
-      selection: state.activeSelections[phoneId]
-    };
-
-    const modalBodyEl = document.getElementById('reservationModalContent');
-    if (!modalBodyEl) return;
-
-    const sel = state.activeSelections[phoneId];
-    const activeColor = phone.colors[sel.colorIdx];
-    const activeStorage = phone.storageOptions[sel.storageIdx];
-    const finalPrice = phone.currentPrice + activeStorage.priceOffset;
-
-    modalBodyEl.innerHTML = `
-      <div style="margin-bottom: 1.5rem;">
-        <span style="font-size: 0.78rem; color: var(--accent-green); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.3rem;">
-          ● Showroom Pickup Desk
-        </span>
-        <h3 style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem;">Reserve for In-Store Pickup</h3>
-        <p style="font-size: 0.88rem; color: var(--text-secondary);">
-          No advance payment required. We will hold the device at our MG Road showroom for 48 hours. Test drive it before you pay.
-        </p>
-      </div>
-
-      <!-- Device Summary -->
-      <div style="display: flex; gap: 1rem; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem;">
-        <img src="${activeColor.image}" style="width: 55px; height: 55px; object-fit: contain;" />
-        <div>
-          <div style="font-weight: 700; color: #fff; font-size: 1rem;">${phone.name}</div>
-          <div style="font-size: 0.8rem; color: var(--text-muted);">${activeColor.name} • ${activeStorage.size}</div>
-          <div style="font-size: 1.15rem; font-weight: 800; color: var(--accent-cyan); margin-top: 0.2rem;">${formatINR(finalPrice)}</div>
-        </div>
-      </div>
-
-      <!-- Form -->
-      <form id="storePickupForm">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-          <div>
-            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.35rem;">Full Name *</label>
-            <input type="text" id="resCustomerName" required placeholder="e.g. Rahul Sharma" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.65rem 0.9rem; color: #fff; outline: none;" />
-          </div>
-          <div>
-            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.35rem;">Mobile Number (For Pass SMS) *</label>
-            <input type="tel" id="resCustomerPhone" required placeholder="9876543210" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.65rem 0.9rem; color: #fff; outline: none;" />
-          </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-          <div>
-            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.35rem;">Pickup Day *</label>
-            <select id="resPickupDay" style="width: 100%; background: #1a202c; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.65rem 0.9rem; color: #fff; outline: none;">
-              <option value="Today">Today (Within 30 Mins)</option>
-              <option value="Tomorrow">Tomorrow</option>
-              <option value="Day After Tomorrow">Day After Tomorrow</option>
-            </select>
-          </div>
-          <div>
-            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.35rem;">Preferred Time Slot *</label>
-            <select id="resPickupSlot" style="width: 100%; background: #1a202c; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.65rem 0.9rem; color: #fff; outline: none;">
-              <option value="11:00 AM - 02:00 PM">Morning (11 AM - 2 PM)</option>
-              <option value="03:00 PM - 06:00 PM">Afternoon (3 PM - 6 PM)</option>
-              <option value="06:30 PM - 09:30 PM">Evening (6:30 PM - 9:30 PM)</option>
-            </select>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-primary-reserve" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
-          <span>Generate Digital Store Pass</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </button>
-      </form>
-    `;
-
-    const form = document.getElementById('storePickupForm');
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      generateDigitalStorePass();
-    });
-
-    if (reservationModalEl) reservationModalEl.classList.add('active');
-  };
-
-  const generateDigitalStorePass = () => {
-    window.soundEngine.playSuccess();
-
-    const name = document.getElementById('resCustomerName').value;
-    const phone = document.getElementById('resCustomerPhone').value;
-    const day = document.getElementById('resPickupDay').value;
-    const slot = document.getElementById('resPickupSlot').value;
-
-    const res = state.cartReservation;
-    const phoneObj = res.phone;
-    const sel = res.selection;
-    const activeColor = phoneObj.colors[sel.colorIdx];
-    const activeStorage = phoneObj.storageOptions[sel.storageIdx];
-    const finalPrice = phoneObj.currentPrice + activeStorage.priceOffset;
-
-    const token = 'NEXUS-' + Math.floor(1000 + Math.random() * 9000);
-    const bookingRecord = {
-      token,
-      name,
-      phone,
-      day,
-      slot,
-      phoneName: phoneObj.name,
-      color: activeColor.name,
-      storage: activeStorage.size,
-      shelf: phoneObj.shelfLocation,
-      price: finalPrice,
-      timestamp: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
-    };
-
-    // Save to LocalStorage
-    try {
-      const stored = JSON.parse(localStorage.getItem('nexus_store_bookings') || '[]');
-      stored.unshift(bookingRecord);
-      localStorage.setItem('nexus_store_bookings', JSON.stringify(stored));
-      updateBookingsBadge();
-    } catch (e) {
-      console.warn("Storage err", e);
+    const existing = cartItems.find(item => item.id === id);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cartItems.push({
+        id: phone.id,
+        name: phone.name,
+        variant: phone.storage,
+        price: phone.price,
+        quantity: 1,
+        image: phone.image
+      });
     }
 
-    const modalBodyEl = document.getElementById('reservationModalContent');
-    modalBodyEl.innerHTML = `
-      <div style="text-align: center; margin-bottom: 1.2rem;">
-        <div style="width: 52px; height: 52px; border-radius: 50%; background: var(--accent-green-bg); color: var(--accent-green); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </div>
-        <h3 style="font-size: 1.5rem; font-weight: 800; color: #fff;">Pickup Pass Confirmed</h3>
-        <p style="font-size: 0.85rem; color: var(--text-secondary);">Your device is reserved at our showroom counter for 48 hours.</p>
-      </div>
-
-      <!-- The Digital Boarding Pass Ticket -->
-      <div class="pass-ticket-card">
-        <div class="pass-header">
-          <div>
-            <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Pass Code</span>
-            <div class="pass-token-id">#${token}</div>
-          </div>
-          <span style="font-size: 0.75rem; background: var(--accent-green-bg); color: var(--accent-green); padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700;">
-            ✓ VERIFIED HOLD
-          </span>
-        </div>
-
-        <div class="pass-grid-fields">
-          <div class="pass-field-item">
-            <span>Customer</span>
-            <strong>${name}</strong>
-          </div>
-          <div class="pass-field-item">
-            <span>Mobile</span>
-            <strong>${phone}</strong>
-          </div>
-          <div class="pass-field-item">
-            <span>Device</span>
-            <strong>${phoneObj.name} (${activeColor.name})</strong>
-          </div>
-          <div class="pass-field-item">
-            <span>Payable at Counter</span>
-            <strong style="color: var(--accent-cyan);">${formatINR(finalPrice)}</strong>
-          </div>
-          <div class="pass-field-item">
-            <span>Pickup Timing</span>
-            <strong>${day} (${slot})</strong>
-          </div>
-          <div class="pass-field-item">
-            <span>Showroom Shelf</span>
-            <strong style="color: var(--accent-green);">${phoneObj.shelfLocation.split('(')[0]}</strong>
-          </div>
-        </div>
-
-        <div class="pass-codes-center">
-          <canvas id="modalQrCanvas" class="pass-qr-canvas" width="140" height="140"></canvas>
-          <canvas id="modalBarcodeCanvas" class="pass-barcode-canvas" width="240" height="44"></canvas>
-          <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">
-            Present this pass or QR code at Cash Counter #01 for instant verification.
-          </p>
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
-        <button class="btn-primary-reserve" style="flex: 1;" onclick="window.print();">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-          <span>Print / Save Pass</span>
-        </button>
-        <button class="budget-filter-btn" style="flex: 1; padding: 0.7rem;" onclick="closeReservationModal();">
-          Done
-        </button>
-      </div>
-    `;
-
-    setTimeout(() => {
-      const qr = document.getElementById('modalQrCanvas');
-      const bar = document.getElementById('modalBarcodeCanvas');
-      if (qr && window.NexusPassGenerator) window.NexusPassGenerator.drawQRCode(qr, `${token}-${phone}`);
-      if (bar && window.NexusPassGenerator) window.NexusPassGenerator.drawBarcode(bar, token);
-    }, 100);
+    updateCartBadge();
+    openMobileAppScreen('cart');
   };
 
-  window.closeReservationModal = () => {
-    window.soundEngine.playClick();
-    if (reservationModalEl) reservationModalEl.classList.remove('active');
+  // Open detail
+  window.openProductDetail = (id) => {
+    const allPhones = [...data.popularPhones, ...data.bestDeals];
+    const phone = allPhones.find(p => p.id === id);
+    if (phone) {
+      currentMobilePhone = phone;
+      selectedColorIdx = 0;
+      mobileQuantity = 1;
+      openMobileAppScreen('detail');
+    }
   };
-
-  document.getElementById('modalCloseBtn')?.addEventListener('click', closeReservationModal);
-  if (reservationModalEl) {
-    reservationModalEl.addEventListener('click', (e) => {
-      if (e.target === reservationModalEl) closeReservationModal();
-    });
-  }
 
   // =========================================================================
-  // MY BOOKINGS / RESERVATIONS VIEWER
+  // THE 6 MOBILE APP SCREENS (MATCHES THE 6 COLUMNS ON THE RIGHT OF MOCKUP)
   // =========================================================================
-  const updateBookingsBadge = () => {
-    try {
-      const bookings = JSON.parse(localStorage.getItem('nexus_store_bookings') || '[]');
-      if (reservationsCountBadge) {
-        reservationsCountBadge.textContent = bookings.length;
-        reservationsCountBadge.style.display = bookings.length > 0 ? 'inline-block' : 'none';
-      }
-    } catch (e) {}
-  };
+  window.openMobileAppScreen = (screenName) => {
+    if (window.soundEngine) window.soundEngine.playWhoosh();
+    if (!mobileScreenContent || !mobileAppModal) return;
 
-  window.openMyBookingsModal = () => {
-    window.soundEngine.playWhoosh();
-    const modal = document.getElementById('myBookingsModal');
-    const listEl = document.getElementById('myBookingsList');
-    if (!modal || !listEl) return;
+    mobileAppModal.classList.add('active');
 
-    let bookings = [];
-    try {
-      bookings = JSON.parse(localStorage.getItem('nexus_store_bookings') || '[]');
-    } catch (e) {}
+    // 1. PRODUCT DETAIL VIEW SCREEN (Screen 1 from mockup)
+    if (screenName === 'detail') {
+      const p = currentMobilePhone;
+      mobileScreenContent.innerHTML = `
+        <div class="screen-header-nav">
+          <button onclick="closeMobileAppModal();">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div style="display: flex; gap: 0.8rem;">
+            <button title="Share">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            </button>
+            <button title="Wishlist">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+        </div>
 
-    if (bookings.length === 0) {
-      listEl.innerHTML = `
-        <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
-          <svg style="margin: 0 auto 0.8rem; color: var(--text-muted);" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.3rem;">No Active Reservations</h4>
-          <p style="font-size: 0.85rem;">Browse phones and click "Reserve for Store Pickup" to generate a free hold pass.</p>
+        <!-- Split Gallery & Main Image -->
+        <div class="mobile-gallery-split">
+          <div class="mobile-thumb-col">
+            <div class="mobile-thumb-box active"><img src="${p.image}"></div>
+            <div class="mobile-thumb-box"><img src="${p.image}"></div>
+            <div class="mobile-thumb-box"><img src="${p.image}"></div>
+          </div>
+          <div class="mobile-main-photo-stage">
+            <img src="${p.image}" alt="${p.name}">
+          </div>
+        </div>
+
+        <!-- Phone Title & Price -->
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: #0f172a; margin-bottom: 0.2rem;">${p.name}</h2>
+        <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.4rem;">${p.storage}</div>
+        
+        <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; margin-bottom: 0.6rem;">
+          <span style="color: #f59e0b;">★★★★★</span>
+          <span style="font-weight: 700; color: #0f172a;">${p.rating}</span>
+          <span style="color: #94a3b8;">(${p.reviewsCount} reviews)</span>
+        </div>
+
+        <div style="font-size: 1.45rem; font-weight: 800; color: #0f172a; margin-bottom: 0.8rem;">${formatUSD(p.price)}</div>
+        <p style="font-size: 0.8rem; color: #64748b; line-height: 1.5; margin-bottom: 0.8rem;">${p.description}</p>
+
+        <!-- 4-Grid Specs Box -->
+        <div class="mobile-specs-grid">
+          <div class="mobile-spec-pill">
+            <strong>${p.specs.display}</strong>
+            <span>Display</span>
+          </div>
+          <div class="mobile-spec-pill">
+            <strong>${p.specs.storage}</strong>
+            <span>Storage</span>
+          </div>
+          <div class="mobile-spec-pill">
+            <strong>${p.specs.chip}</strong>
+            <span>Pro Chip</span>
+          </div>
+          <div class="mobile-spec-pill">
+            <strong>${p.specs.network}</strong>
+            <span>5G Ready</span>
+          </div>
+        </div>
+
+        <!-- Color Circle Selector -->
+        <div style="font-size: 0.8rem; font-weight: 700; color: #0f172a;">Color</div>
+        <div class="color-circles-row">
+          ${p.colors.map((hex, idx) => `
+            <div class="color-choice-circle ${selectedColorIdx === idx ? 'active' : ''}" style="background-color: ${hex};" onclick="selectMobileColor(${idx})"></div>
+          `).join('')}
+        </div>
+
+        <!-- Bottom Action Bar (Quantity + Add to Cart) -->
+        <div class="mobile-action-bar-bottom">
+          <div class="qty-counter-box">
+            <button onclick="changeMobileQty(-1)">-</button>
+            <span id="mobileQtyDisplay">${mobileQuantity}</span>
+            <button onclick="changeMobileQty(1)">+</button>
+          </div>
+          <button class="btn-blue-block" style="flex: 1;" onclick="addToCart('${p.id}')">
+            Add to Cart
+          </button>
         </div>
       `;
-    } else {
-      listEl.innerHTML = bookings.map(b => `
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 0.8rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-            <span style="font-family: var(--font-mono); font-weight: 800; color: var(--accent-cyan);">#${b.token}</span>
-            <span style="font-size: 0.75rem; color: var(--accent-green); font-weight: 700;">● Ready for Pickup</span>
-          </div>
-          <div style="font-size: 1.05rem; font-weight: 700; color: #fff;">${b.phoneName}</div>
-          <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">${b.color} • ${b.storage} • Payable: ${formatINR(b.price)}</div>
-          <div style="font-size: 0.8rem; color: var(--text-secondary);">Pickup: <strong>${b.day} (${b.slot})</strong></div>
-          <div style="font-size: 0.75rem; color: var(--accent-cyan); margin-top: 0.3rem;">Showroom Shelf: ${b.shelf}</div>
-        </div>
-      `).join('');
     }
 
-    modal.classList.add('active');
+    // 2. YOUR CART (3) SCREEN (Screen 2 from mockup)
+    else if (screenName === 'cart') {
+      const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+      const total = subtotal;
+
+      mobileScreenContent.innerHTML = `
+        <div class="screen-header-nav">
+          <button onclick="closeMobileAppModal();">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="screen-header-title">Your Cart (${cartItems.length})</div>
+          <div style="width: 20px;"></div>
+        </div>
+
+        <!-- Items List -->
+        <div style="flex: 1; overflow-y: auto;">
+          ${cartItems.map((item, idx) => `
+            <div class="cart-list-item-row">
+              <img src="${item.image}" alt="${item.name}">
+              <div>
+                <div style="font-weight: 700; font-size: 0.9rem; color: #0f172a;">${item.name}</div>
+                <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.2rem;">${item.variant}</div>
+                <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a;">${formatUSD(item.price)}</div>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;">
+                <button onclick="removeCartItem(${idx})" style="background: transparent; border: none; color: #94a3b8; cursor: pointer;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+                <div class="qty-counter-box" style="padding: 0.1rem 0.4rem;">
+                  <button onclick="changeItemQty(${idx}, -1)">-</button>
+                  <span style="font-size: 0.85rem;">${item.quantity}</span>
+                  <button onclick="changeItemQty(${idx}, 1)">+</button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Totals & Checkout -->
+        <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: auto;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #64748b; margin-bottom: 0.3rem;">
+            <span>Subtotal</span>
+            <span style="font-weight: 700; color: #0f172a;">${formatUSD(subtotal)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #64748b; margin-bottom: 0.8rem;">
+            <span>Shipping</span>
+            <span style="font-weight: 700; color: #0f172a;">$0.00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 1.2rem;">
+            <span>Total</span>
+            <span>${formatUSD(total)}</span>
+          </div>
+
+          <button class="btn-blue-block" onclick="openMobileAppScreen('checkout')">
+            <span>Proceed to Checkout</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      `;
+    }
+
+    // 3. CHECKOUT SHIPPING SCREEN (Screen 3 from mockup)
+    else if (screenName === 'checkout') {
+      mobileScreenContent.innerHTML = `
+        <div class="screen-header-nav">
+          <button onclick="openMobileAppScreen('cart');">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="screen-header-title">Checkout</div>
+          <div style="width: 20px;"></div>
+        </div>
+
+        <!-- 3-Step Wizard Indicator -->
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 1.5rem; padding: 0 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.3rem; color: #2563eb; font-weight: 700;">
+            <span style="width: 18px; height: 18px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">1</span>
+            Shipping
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.3rem; color: #94a3b8;">
+            <span style="width: 18px; height: 18px; border-radius: 50%; background: #e2e8f0; color: #64748b; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">2</span>
+            Payment
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.3rem; color: #94a3b8;">
+            <span style="width: 18px; height: 18px; border-radius: 50%; background: #e2e8f0; color: #64748b; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">3</span>
+            Confirmation
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 0.8rem;">Shipping Address</h4>
+
+        <form onsubmit="event.preventDefault(); openMobileAppScreen('payment');" style="display: flex; flex-direction: column; gap: 0.8rem; flex: 1;">
+          <div>
+            <label style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Full Name</label>
+            <input type="text" value="Sarah Ahmed" required style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; outline: none;">
+          </div>
+          <div>
+            <label style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Address</label>
+            <input type="text" value="12 Rue des Fleurs" required style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; outline: none;">
+          </div>
+          <div>
+            <label style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 0.2rem;">City</label>
+            <input type="text" value="Algiers" required style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; outline: none;">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div>
+              <label style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Phone number</label>
+              <input type="tel" value="+213 555 123 456" required style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; outline: none;">
+            </div>
+            <div>
+              <label style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Postal Code</label>
+              <input type="text" value="16000" required style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; outline: none;">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-blue-block" style="margin-top: 1.5rem;">
+            <span>Continue to Payment</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </form>
+      `;
+    }
+
+    // 4. PAYMENT METHOD SCREEN (Screen 4 from mockup)
+    else if (screenName === 'payment') {
+      mobileScreenContent.innerHTML = `
+        <div class="screen-header-nav">
+          <button onclick="openMobileAppScreen('checkout');">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="screen-header-title">Payment Method</div>
+          <div style="width: 20px;"></div>
+        </div>
+
+        <form onsubmit="event.preventDefault(); openMobileAppScreen('success');" style="display: flex; flex-direction: column; gap: 0.8rem; flex: 1;">
+          <!-- Payment Radios -->
+          <div style="border: 1px solid #2563eb; background: #eff6ff; border-radius: 10px; padding: 0.8rem; display: flex; align-items: center; justify-content: space-between;">
+            <label style="display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 0.85rem; color: #0f172a; cursor: pointer;">
+              <input type="radio" name="paymentMethod" checked>
+              Credit / Debit Card
+            </label>
+            <span style="font-size: 0.72rem; color: #2563eb; font-weight: 700;">VISA • MC</span>
+          </div>
+
+          <div style="border: 1px solid var(--border-color); border-radius: 10px; padding: 0.8rem; display: flex; align-items: center; justify-content: space-between;">
+            <label style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: #0f172a; cursor: pointer;">
+              <input type="radio" name="paymentMethod">
+              PayPal
+            </label>
+            <span style="font-size: 0.72rem; color: #003087; font-weight: 700;">PayPal</span>
+          </div>
+
+          <div style="border: 1px solid var(--border-color); border-radius: 10px; padding: 0.8rem; display: flex; align-items: center; justify-content: space-between;">
+            <label style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: #0f172a; cursor: pointer;">
+              <input type="radio" name="paymentMethod">
+              Apple Pay
+            </label>
+            <span style="font-size: 0.72rem; color: #000; font-weight: 700;">Pay</span>
+          </div>
+
+          <div style="border: 1px solid var(--border-color); border-radius: 10px; padding: 0.8rem; display: flex; align-items: center; justify-content: space-between;">
+            <label style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: #0f172a; cursor: pointer;">
+              <input type="radio" name="paymentMethod">
+              Cash on Delivery
+            </label>
+            <span style="font-size: 0.72rem; color: #64748b;">COD</span>
+          </div>
+
+          <!-- Card Details Input -->
+          <div style="margin-top: 1rem;">
+            <label style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Card Number</label>
+            <input type="text" value="1234 5678 9012 3456" required style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; outline: none;">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div>
+              <label style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Expiry Date</label>
+              <input type="text" value="04/28" required style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; outline: none;">
+            </div>
+            <div>
+              <label style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 0.2rem;">CVV</label>
+              <input type="password" value="123" required style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; outline: none;">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-blue-block" style="margin-top: auto;">
+            Confirm Payment
+          </button>
+        </form>
+      `;
+    }
+
+    // 5. ORDER PLACED SUCCESSFULLY (Screen 5 from mockup)
+    else if (screenName === 'success') {
+      if (window.soundEngine) window.soundEngine.playSuccess();
+      mobileScreenContent.innerHTML = `
+        <div style="text-align: center; padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+
+          <h2 style="font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: 0.4rem;">Order Placed Successfully!</h2>
+          <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.8rem; line-height: 1.5;">
+            Thank you for your order.<br>Your order number is <strong style="color: #2563eb;">#TN784512</strong>
+          </p>
+
+          <button class="btn-blue-block" style="margin-bottom: 0.6rem;" onclick="openMobileAppScreen('track');">
+            View Order Details
+          </button>
+          
+          <button style="background: transparent; border: none; color: #64748b; font-size: 0.85rem; font-weight: 600; cursor: pointer; padding: 0.5rem;" onclick="closeMobileAppModal();">
+            Continue Shopping
+          </button>
+
+          <!-- Gift Box Graphic from Mockup -->
+          <div style="margin-top: 2rem; position: relative; text-align: center;">
+            <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=300&q=80" style="height: 130px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));">
+            <div style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #2563eb; margin-top: 0.5rem;">
+              Enjoy your new phone! ♡
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 6. TRACK YOUR ORDER (Screen 6 from mockup)
+    else if (screenName === 'track') {
+      mobileScreenContent.innerHTML = `
+        <div class="screen-header-nav">
+          <button onclick="closeMobileAppModal();">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="screen-header-title">Track Your Order</div>
+          <div style="width: 20px;"></div>
+        </div>
+
+        <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 1.2rem;">Order #TN784512</div>
+
+        <!-- Stepper Timeline -->
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; gap: 0.8rem; align-items: flex-start;">
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-top: 2px;">✓</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Order Placed</div>
+              <div style="font-size: 0.72rem; color: #94a3b8;">Apr 25, 10:30 AM</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.8rem; align-items: flex-start;">
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-top: 2px;">✓</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Processing</div>
+              <div style="font-size: 0.72rem; color: #94a3b8;">Apr 25, 02:15 PM</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.8rem; align-items: flex-start;">
+            <div style="width: 20px; height: 20px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-top: 2px;">✓</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Shipped</div>
+              <div style="font-size: 0.72rem; color: #94a3b8;">Apr 26, 09:30 AM</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.8rem; align-items: flex-start;">
+            <div style="width: 20px; height: 20px; border-radius: 50%; border: 2px solid #2563eb; color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-top: 2px;">○</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: #2563eb;">Out for Delivery</div>
+              <div style="font-size: 0.72rem; color: #94a3b8;">Expected Apr 28</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.8rem; align-items: flex-start;">
+            <div style="width: 20px; height: 20px; border-radius: 50%; border: 2px solid #cbd5e1; color: #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; margin-top: 2px;">○</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: #94a3b8;">Delivered</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estimated Delivery -->
+        <div style="background: #f1f5f9; border-radius: 10px; padding: 0.8rem; margin-bottom: 1rem; font-size: 0.8rem; color: #0f172a;">
+          <div style="color: #64748b; font-size: 0.72rem;">Estimated Delivery</div>
+          <strong>Apr 28, 2026</strong>
+        </div>
+
+        <!-- Address -->
+        <div style="font-size: 0.8rem; color: #0f172a; margin-bottom: 1rem;">
+          <div style="color: #64748b; font-size: 0.72rem;">Shipping Address</div>
+          <div>12 Rue des Fleurs, Algiers, 16000</div>
+        </div>
+
+        <!-- Simulated Map Box with Delivery Pin -->
+        <div style="height: 120px; border-radius: 12px; background: #e0f2fe; border: 1px solid #bae6fd; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <div style="position: absolute; width: 100%; height: 2px; background: #38bdf8; transform: rotate(15deg);"></div>
+          <div style="background: #2563eb; color: #fff; padding: 0.4rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; z-index: 2;">
+            🚚 Delivery in Transit
+          </div>
+        </div>
+      `;
+    }
   };
 
-  window.closeMyBookingsModal = () => {
-    window.soundEngine.playClick();
-    document.getElementById('myBookingsModal')?.classList.remove('active');
+  window.closeMobileAppModal = () => {
+    if (window.soundEngine) window.soundEngine.playClick();
+    if (mobileAppModal) mobileAppModal.classList.remove('active');
   };
 
-  // =========================================================================
-  // TRADE-IN SPOT EXCHANGE ESTIMATOR
-  // =========================================================================
-  const tradeBrandSelect = document.getElementById('tradeDeviceSelect');
-  const condButtons = document.querySelectorAll('.cond-btn');
-  const tradeOutputEl = document.getElementById('tradeOutputValue');
-
-  let activeCondFactor = 1.0;
-
-  const updateTradeCalculation = () => {
-    if (!tradeBrandSelect || !tradeOutputEl) return;
-    const selected = tradeBrandSelect.options[tradeBrandSelect.selectedIndex];
-    const maxVal = parseInt(selected.dataset.max || '0', 10);
-    const finalVal = Math.round(maxVal * activeCondFactor);
-    tradeOutputEl.textContent = formatINR(finalVal);
-  };
-
-  if (tradeBrandSelect) {
-    tradeBrandSelect.addEventListener('change', () => {
-      window.soundEngine.playTick();
-      updateTradeCalculation();
+  if (mobileAppModal) {
+    mobileAppModal.addEventListener('click', (e) => {
+      if (e.target === mobileAppModal) closeMobileAppModal();
     });
   }
 
-  condButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      window.soundEngine.playTick();
-      condButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeCondFactor = parseFloat(btn.dataset.factor || '1.0');
-      updateTradeCalculation();
+  // Mobile quantity adjust
+  window.changeMobileQty = (delta) => {
+    mobileQuantity = Math.max(1, mobileQuantity + delta);
+    const qtyEl = document.getElementById('mobileQtyDisplay');
+    if (qtyEl) qtyEl.textContent = mobileQuantity;
+  };
+
+  // Mobile color choice
+  window.selectMobileColor = (idx) => {
+    selectedColorIdx = idx;
+    document.querySelectorAll('.color-choice-circle').forEach((c, i) => {
+      c.classList.toggle('active', i === idx);
     });
-  });
+  };
+
+  // Cart quantity adjust
+  window.changeItemQty = (idx, delta) => {
+    cartItems[idx].quantity = Math.max(1, cartItems[idx].quantity + delta);
+    updateCartBadge();
+    openMobileAppScreen('cart');
+  };
+
+  window.removeCartItem = (idx) => {
+    cartItems.splice(idx, 1);
+    updateCartBadge();
+    openMobileAppScreen('cart');
+  };
 
   // Initial Run
-  renderCatalog();
-  updateTradeCalculation();
-  updateBookingsBadge();
+  renderPopularPhones();
+  renderBestDeals();
+  updateCartBadge();
 });
