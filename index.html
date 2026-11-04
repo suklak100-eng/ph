@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TechNova | Official Flagship Smartphones & Mobile Experience</title>
   <meta name="description" content="Discover the latest smartphones, new arrivals, and unbeatable deals at TechNova. Better Tech. Brighter Tomorrow.">
+  <meta name="referrer" content="no-referrer">
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%232563eb%22/><text y=%22.75em%22 x=%2250%25%22 text-anchor=%22middle%22 font-size=%2260%22 font-family=%22sans-serif%22 font-weight=%22bold%22 fill=%22white%22>T</text></svg>">
   <link rel="stylesheet" href="styles/main.css">
@@ -72,16 +73,37 @@
         
         <!-- Hero Left Content -->
         <div class="hero-left-content">
-          <div class="hero-new-arrival-tag" id="heroTag">New Arrival</div>
-          <h1 class="hero-phone-title" id="heroTitle">iPhone 16 Pro</h1>
+          <div class="hero-new-arrival-tag" id="heroTag">Apple Intelligence</div>
+          <h1 class="hero-phone-title" id="heroTitle">iPhone 16 Pro Max</h1>
           <div class="hero-phone-subheading" id="heroSubheading">More Power. More Possibilities.</div>
           <p class="hero-phone-desc" id="heroDesc">
-            Discover the latest iPhone with advanced camera, longer battery life and a stunning design.
+            Discover the latest iPhone with A18 Pro chip, studio-grade 48MP camera, longer battery life and a stunning titanium design.
           </p>
-          <a href="javascript:void(0)" class="btn-shop-now" id="heroShopBtn" onclick="openProductDetail('iphone-16-pro');">
-            <span>Shop Now</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </a>
+
+          <!-- Hero Dynamic Pricing & Discount Box -->
+          <div class="hero-pricing-box" id="heroPricingBox">
+            <div class="hero-price-meta-label">Special Store Showroom Offer</div>
+            <div class="hero-price-display-row">
+              <span class="hero-current-price" id="heroPrice">$1,149.00</span>
+              <span class="hero-original-price" id="heroOriginalPrice">$1,299.00</span>
+              <span class="hero-save-badge" id="heroDiscountBadge">SAVE $150 (12% OFF)</span>
+            </div>
+            <div class="hero-finance-note" id="heroFinanceNote">
+              Or from <strong>$47.88/mo.</strong> with 0% EMI • Book online & collect at our showroom today
+            </div>
+          </div>
+
+          <!-- Hero Action Buttons -->
+          <div class="hero-action-row">
+            <a href="javascript:void(0)" class="btn-shop-now" id="heroShopBtn" onclick="openProductDetail('iphone-16-pro');">
+              <span>Book For Pickup</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <button class="btn-hero-secondary" id="heroAddToCartBtn" onclick="addToCart('iphone-16-pro')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              <span>Add to Cart</span>
+            </button>
+          </div>
 
           <!-- Carousel Dots Bottom Left (4 dots) -->
           <div class="hero-carousel-dots" id="heroDots">
@@ -97,9 +119,10 @@
           <div class="hero-ambient-glow"></div>
           <img 
             id="heroPhoneImg"
-            src="assets/phones/hero-iphone-16-pro.svg" 
-            alt="Apple iPhone 16 Pro Natural Titanium" 
+            src="https://pngimg.com/uploads/iphone16/iphone16_PNG38.png" 
+            alt="Apple iPhone 16 Pro Max Natural Titanium Duo" 
             class="hero-phone-render floating-phone"
+            onerror="this.onerror=null; this.src='assets/phones/hero-iphone-16-pro.svg';"
           />
 
           <!-- Translucent Circular Nav Arrows on Bottom Right -->
@@ -205,9 +228,10 @@
 
         <div class="offer-right-box">
           <img 
-            src="assets/phones/oneplus-12.svg" 
+            src="https://pngimg.com/uploads/iphone16/iphone16_PNG13.png" 
             alt="Smartphones Fan" 
             class="offer-phones-fan-img floating-fan"
+            onerror="this.onerror=null; this.src='assets/phones/oneplus-12.svg';"
           />
           <div class="script-text-smarter pulse-script">Better Faster Smarter ♡</div>
         </div>
@@ -332,9 +356,10 @@
 
         <div class="newsletter-right">
           <img 
-            src="assets/phones/iphone-15.svg" 
+            src="https://pngimg.com/uploads/iphone16/iphone16_PNG29.png" 
             alt="Dual iPhones" 
             class="newsletter-phones-img floating-newsletter"
+            onerror="this.onerror=null; this.src='assets/phones/iphone-15.svg';"
           />
           <div class="script-text-awaits pulse-script">Your Next Phone Awaits ♡</div>
         </div>

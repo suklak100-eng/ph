@@ -1,6 +1,6 @@
 /**
  * TECHNOVA SMARTPHONE CATALOG & STORE DATABASE
- * Matches the exact products, pricing, discounts, and ratings from the TechNova design.
+ * Real smartphone models with authentic transparent photography, realistic showroom discounts, and official specs.
  */
 
 window.TECHNOVA_DATA = {
@@ -8,79 +8,86 @@ window.TECHNOVA_DATA = {
   popularPhones: [
     {
       id: "iphone-16-pro",
-      name: "iPhone 16 Pro",
+      name: "iPhone 16 Pro Max",
       brand: "Apple",
       badge: "Best Seller",
       badgeType: "blue",
-      storage: "256GB • Titanium",
-      price: 1199.00,
-      originalPrice: null,
+      storage: "256GB • Natural Titanium",
+      price: 1149.00,
+      originalPrice: 1299.00,
       rating: 4.9,
       reviewsCount: "2.5k",
-      image: "assets/phones/iphone-16-pro.svg",
+      image: "https://pngimg.com/uploads/iphone16/iphone16_PNG38.png",
+      fallbackImage: "assets/phones/iphone-16-pro.svg",
       colors: ["#9a958e", "#2b2a29", "#c5b49e", "#f2f1ed"],
       colorNames: ["Natural Titanium", "Black Titanium", "Desert Titanium", "White Titanium"],
       specs: {
-        display: '6.3"',
+        display: '6.9"',
         storage: "256GB",
         chip: "A18 Pro",
         network: "5G"
       },
-      description: "The iPhone 16 Pro delivers exceptional performance with a powerful A18 Pro chip, pro camera system and a stunning titanium design."
+      description: "The iPhone 16 Pro Max delivers exceptional performance with the powerful A18 Pro chip, 48MP Pro camera system with 5x optical telephoto, and stunning grade-5 titanium frame."
     },
     {
       id: "samsung-galaxy-s24",
-      name: "Samsung Galaxy S24",
+      name: "Galaxy S24 Ultra",
       brand: "Samsung",
-      badge: null,
-      storage: "256GB • Phantom Black",
-      price: 999.00,
-      originalPrice: null,
+      badge: "Galaxy AI",
+      badgeType: "blue",
+      storage: "256GB • Titanium Black",
+      price: 1099.00,
+      originalPrice: 1299.00,
       rating: 4.8,
       reviewsCount: "1.8k",
-      image: "assets/phones/samsung-s24.svg",
+      image: "https://pngimg.com/uploads/smartphone/smartphone_PNG8494.png",
+      fallbackImage: "assets/phones/samsung-s24.svg",
       colors: ["#242528", "#8b8f97", "#50635c", "#7c6882"],
-      colorNames: ["Phantom Black", "Marble Gray", "Jade Green", "Cobalt Violet"],
+      colorNames: ["Titanium Black", "Titanium Gray", "Titanium Violet", "Titanium Yellow"],
       specs: {
-        display: '6.2"',
+        display: '6.8"',
         storage: "256GB",
         chip: "Snapdragon 8 Gen 3",
         network: "5G"
       },
-      description: "Galaxy S24 with Galaxy AI transforms your mobile experience with Circle to Search, Live Translate, and ProVisual Engine."
+      description: "Galaxy S24 Ultra with Galaxy AI transforms your phone experience with Circle to Search, Live Call Translate, Note Assist, integrated S Pen, and 200MP Quad-Telephoto zoom."
     },
     {
       id: "google-pixel-9",
-      name: "Google Pixel 9",
+      name: "Google Pixel 9 Pro",
       brand: "Google",
-      badge: null,
+      badge: "Gemini AI",
+      badgeType: "blue",
       storage: "128GB • Obsidian",
       price: 799.00,
-      originalPrice: null,
-      rating: 4.6,
+      originalPrice: 949.00,
+      rating: 4.7,
       reviewsCount: "1.2k",
-      image: "assets/phones/google-pixel-9.svg",
+      image: "https://www.pngarts.com/files/11/Google-Pixel-Phone-Front-PNG-High-Quality-Image.png",
+      fallbackImage: "assets/phones/google-pixel-9.svg",
       colors: ["#2a2d32", "#ece7e2", "#8b948f", "#e8b8c8"],
-      colorNames: ["Obsidian", "Porcelain", "Wintergreen", "Peony"],
+      colorNames: ["Obsidian", "Porcelain", "Hazel", "Rose Quartz"],
       specs: {
         display: '6.3"',
         storage: "128GB",
         chip: "Tensor G4",
         network: "5G"
       },
-      description: "Engineered by Google with Gemini on-device AI, advanced camera system, and 7 years of OS feature drops."
+      description: "Engineered by Google with Gemini Pro on-device AI, pro triple-lens camera system, Super Actua display, and 7 years of Pixel Feature Drops."
     },
     {
       id: "oneplus-12",
-      name: "OnePlus 12",
+      name: "OnePlus 12 5G",
       brand: "OnePlus",
-      badge: null,
-      storage: "256GB • Green",
-      price: 899.00,
-      originalPrice: null,
-      rating: 4.5,
+      badge: "Flagship Killer",
+      badgeType: "blue",
+      storage: "256GB • Emerald",
+      price: 769.00,
+      originalPrice: 899.00,
+      rating: 4.6,
       reviewsCount: "940",
-      image: "assets/phones/oneplus-12.svg",
+      image: "https://pngimg.com/uploads/iphone16/iphone16_PNG13.png",
+      fallbackImage: "assets/phones/oneplus-12.svg",
       colors: ["#254b38", "#1c1c1f", "#e5e7eb"],
       colorNames: ["Flowy Emerald", "Silky Black", "Glacial White"],
       specs: {
@@ -89,24 +96,25 @@ window.TECHNOVA_DATA = {
         chip: "Snapdragon 8 Gen 3",
         network: "5G"
       },
-      description: "Snapdragon 8 Gen 3 with 5400mAh battery, 100W SUPERVOOC charging, and 4th Gen Hasselblad Camera System."
+      description: "Snapdragon 8 Gen 3 flagship with 5400mAh dual-cell battery, 100W SUPERVOOC charging, and 4th Gen Hasselblad Camera System."
     }
   ],
 
-  // Best Deals (Row 2 from design with discount percentages)
+  // Best Deals (Row 2 from design with showroom discount percentages)
   bestDeals: [
     {
       id: "iphone-15",
       name: "iPhone 15",
       brand: "Apple",
-      badge: "-15%",
+      badge: "-16% OFF",
       badgeType: "discount",
       storage: "128GB • Blue",
-      price: 849.00,
-      originalPrice: 999.00,
+      price: 699.00,
+      originalPrice: 829.00,
       rating: 4.7,
       reviewsCount: "2.1k",
-      image: "assets/phones/iphone-15.svg",
+      image: "https://upload.wikimedia.org/wikipedia/commons/5/5d/Apple_iPhone_15.png",
+      fallbackImage: "assets/phones/iphone-15.svg",
       colors: ["#c3d3db", "#e8c6ce", "#e3e5aa", "#2f3136"],
       colorNames: ["Pastel Blue", "Pink", "Yellow", "Black"],
       specs: {
@@ -115,73 +123,76 @@ window.TECHNOVA_DATA = {
         chip: "A16 Bionic",
         network: "5G"
       },
-      description: "Dynamic Island, 48MP Main camera with 2x telephoto zoom, USB-C connector and durable color-infused glass."
+      description: "Dynamic Island, 48MP Main camera with 2x optical-quality telephoto zoom, USB-C connector and durable color-infused glass back."
     },
     {
-      id: "samsung-galaxy-s23",
-      name: "Samsung Galaxy S23",
-      brand: "Samsung",
-      badge: "-20%",
+      id: "iphone-16-mint",
+      name: "iPhone 16",
+      brand: "Apple",
+      badge: "-14% OFF",
       badgeType: "discount",
-      storage: "128GB • Lavender",
-      price: 719.00,
+      storage: "128GB • Teal Mint",
+      price: 769.00,
       originalPrice: 899.00,
-      rating: 4.6,
+      rating: 4.8,
       reviewsCount: "1.5k",
-      image: "assets/phones/samsung-s23.svg",
-      colors: ["#dcd2e2", "#242528", "#ebe7dd", "#435248"],
-      colorNames: ["Lavender", "Phantom Black", "Cream", "Green"],
+      image: "https://pngimg.com/uploads/iphone16/iphone16_PNG6.png",
+      fallbackImage: "assets/phones/samsung-s23.svg",
+      colors: ["#9ee4d9", "#242528", "#ebe7dd", "#435248"],
+      colorNames: ["Teal Mint", "Ultramarine", "Pink", "Black"],
       specs: {
         display: '6.1"',
         storage: "128GB",
-        chip: "Snapdragon 8 Gen 2",
+        chip: "A18 Chip",
         network: "5G"
       },
-      description: "Compact flagship with 50MP camera, Nightography sensor, and crystal clear Dynamic AMOLED 2X 120Hz display."
+      description: "Equipped with the all-new Camera Control button, 48MP Fusion camera, Action button, and Apple Intelligence."
     },
     {
-      id: "google-pixel-8",
-      name: "Google Pixel 8",
-      brand: "Google",
-      badge: "-10%",
+      id: "iphone-16-white",
+      name: "iPhone 16 White",
+      brand: "Apple",
+      badge: "-14% OFF",
       badgeType: "discount",
-      storage: "128GB • Hazel",
-      price: 719.00,
-      originalPrice: 799.00,
-      rating: 4.6,
+      storage: "128GB • Bright White",
+      price: 769.00,
+      originalPrice: 899.00,
+      rating: 4.7,
       reviewsCount: "1.1k",
-      image: "assets/phones/google-pixel-8.svg",
-      colors: ["#7d8680", "#242528", "#dfb8ab"],
-      colorNames: ["Hazel", "Obsidian", "Rose"],
+      image: "https://pngimg.com/uploads/iphone16/iphone16_PNG29.png",
+      fallbackImage: "assets/phones/google-pixel-8.svg",
+      colors: ["#ffffff", "#242528", "#dfb8ab"],
+      colorNames: ["Bright White", "Black", "Pink"],
       specs: {
-        display: '6.2"',
+        display: '6.1"',
         storage: "128GB",
-        chip: "Tensor G3",
+        chip: "A18 Chip",
         network: "5G"
       },
-      description: "Pixel 8 is the helpful phone engineered by Google, with a sophisticated camera and Google AI to save you time."
+      description: "Pure white ceramic shield front and aerospace-grade aluminum edges with Super Retina XDR OLED screen."
     },
     {
-      id: "oneplus-nord-3",
-      name: "OnePlus Nord 3",
-      brand: "OnePlus",
-      badge: "-12%",
+      id: "iphone-16-blue",
+      name: "iPhone 16 Plus",
+      brand: "Apple",
+      badge: "-12% OFF",
       badgeType: "discount",
-      storage: "256GB • Black",
-      price: 598.00,
-      originalPrice: 679.00,
-      rating: 4.4,
+      storage: "256GB • Ultramarine",
+      price: 789.00,
+      originalPrice: 899.00,
+      rating: 4.6,
       reviewsCount: "820",
-      image: "assets/phones/oneplus-nord-3.svg",
-      colors: ["#1c1c1f", "#99b7a4"],
-      colorNames: ["Tempest Gray", "Misty Green"],
+      image: "https://pngimg.com/uploads/iphone16/iphone16_PNG34.png",
+      fallbackImage: "assets/phones/oneplus-nord-3.svg",
+      colors: ["#3b528b", "#1c1c1f"],
+      colorNames: ["Ultramarine Blue", "Space Black"],
       specs: {
-        display: '6.74"',
+        display: '6.7"',
         storage: "256GB",
-        chip: "Dimensity 9000",
+        chip: "A18 Chip",
         network: "5G"
       },
-      description: "Flagship 50MP Sony IMX890 sensor with OIS, 16GB LPDDR5X RAM, 80W SUPERVOOC and 120Hz Super Fluid AMOLED."
+      description: "Big screen 6.7-inch display, class-leading battery life, dual camera system with spatial photo capture for Vision Pro."
     }
   ],
 
@@ -189,27 +200,27 @@ window.TECHNOVA_DATA = {
   initialCart: [
     {
       id: "iphone-16-pro",
-      name: "iPhone 16 Pro",
-      variant: "256GB • Blue",
-      price: 1199.00,
+      name: "iPhone 16 Pro Max",
+      variant: "256GB • Titanium",
+      price: 1149.00,
       quantity: 1,
-      image: "assets/phones/iphone-16-pro.svg"
+      image: "https://pngimg.com/uploads/iphone16/iphone16_PNG38.png"
     },
     {
       id: "samsung-galaxy-s24",
-      name: "Samsung Galaxy S24",
+      name: "Galaxy S24 Ultra",
       variant: "256GB • Black",
-      price: 999.00,
+      price: 1099.00,
       quantity: 1,
-      image: "assets/phones/samsung-s24.svg"
+      image: "https://pngimg.com/uploads/smartphone/smartphone_PNG8494.png"
     },
     {
       id: "airpods-pro-2",
       name: "AirPods Pro 2",
-      variant: "White",
+      variant: "MagSafe (USB-C)",
       price: 249.00,
       quantity: 1,
-      image: "assets/phones/airpods-pro-2.svg"
+      image: "https://pngimg.com/uploads/airPods/airPods_PNG13.png"
     }
   ],
 

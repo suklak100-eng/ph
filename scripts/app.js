@@ -35,40 +35,60 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // =========================================================================
-  // HERO CAROUSEL CONTROLLER
+  // HERO CAROUSEL CONTROLLER (Real phones with live pricing & discounts)
   // =========================================================================
   const heroSlides = [
     {
       id: "iphone-16-pro",
-      tag: "New Arrival",
-      title: "iPhone 16 Pro",
-      subheading: "More Power. More Possibilities.",
-      desc: "Discover the latest iPhone with advanced camera, longer battery life and a stunning titanium design.",
-      img: "assets/phones/hero-iphone-16-pro.svg"
+      tag: "Apple Intelligence",
+      title: "iPhone 16 Pro Max",
+      subheading: "Titanium. So Strong. So Light. So Pro.",
+      desc: "A18 Pro chip with 6-core GPU, next-generation 48MP Fusion camera with Camera Control, and stunning grade-5 titanium in Natural Titanium.",
+      price: 1149.00,
+      originalPrice: 1299.00,
+      discountText: "SAVE $150 (12% OFF)",
+      financeText: "Or from <strong>$47.88/mo.</strong> with 0% EMI • Book online & collect at our showroom today",
+      img: "https://pngimg.com/uploads/iphone16/iphone16_PNG38.png",
+      fallback: "assets/phones/hero-iphone-16-pro.svg"
     },
     {
       id: "samsung-galaxy-s24",
       tag: "Galaxy AI Era",
-      title: "Galaxy S24",
-      subheading: "Epic, Just Like That.",
-      desc: "Search like never before with Circle to Search, get real-time voice translation, and take studio-grade night shots.",
-      img: "assets/phones/samsung-s24.svg"
-    },
-    {
-      id: "oneplus-12",
-      tag: "Flagship Killer",
-      title: "OnePlus 12",
-      subheading: "Smooth Beyond Belief.",
-      desc: "Snapdragon 8 Gen 3 with 5400mAh battery, 100W SUPERVOOC charging, and 4th Gen Hasselblad Camera System.",
-      img: "assets/phones/oneplus-12.svg"
+      title: "Galaxy S24 Ultra",
+      subheading: "Circle to Search. Live Translate. 200MP Zoom.",
+      desc: "Titanium armor with built-in S Pen, Snapdragon 8 Gen 3 for Galaxy, and groundbreaking Galaxy AI with Note Assist & Nightography.",
+      price: 1099.00,
+      originalPrice: 1299.00,
+      discountText: "SAVE $200 (15% OFF)",
+      financeText: "Or from <strong>$45.79/mo.</strong> with 0% EMI • Available in Titanium Black & Gray",
+      img: "https://pngimg.com/uploads/smartphone/smartphone_PNG8494.png",
+      fallback: "assets/phones/samsung-s24.svg"
     },
     {
       id: "google-pixel-9",
       tag: "Built by Google",
-      title: "Pixel 9",
-      subheading: "Engineered with Gemini AI.",
-      desc: "Super fast Google Tensor G4 chip, pro-level photos, and magical AI editing features right in your hands.",
-      img: "assets/phones/google-pixel-9.svg"
+      title: "Google Pixel 9 Pro",
+      subheading: "Engineered with Gemini AI & Iconic Visor.",
+      desc: "Google Tensor G4, 16GB RAM for on-device AI, pro triple-lens camera with 30x Super Res Zoom, and 7 years of Pixel Feature Drops.",
+      price: 799.00,
+      originalPrice: 949.00,
+      discountText: "SAVE $150 (16% OFF)",
+      financeText: "Or from <strong>$33.29/mo.</strong> with 0% EMI • Free Google One AI Premium trial",
+      img: "https://www.pngarts.com/files/11/Google-Pixel-Phone-Front-PNG-High-Quality-Image.png",
+      fallback: "assets/phones/google-pixel-9.svg"
+    },
+    {
+      id: "oneplus-12",
+      tag: "Flagship Killer",
+      title: "OnePlus 12 5G",
+      subheading: "Smooth Beyond Belief • 4th Gen Hasselblad.",
+      desc: "Snapdragon 8 Gen 3, 5400mAh massive dual-cell battery, 100W SUPERVOOC charging, and 2K 120Hz ProXDR display.",
+      price: 769.00,
+      originalPrice: 899.00,
+      discountText: "SAVE $130 (15% OFF)",
+      financeText: "Or from <strong>$32.04/mo.</strong> with 0% EMI • Includes 100W Power Adapter in box",
+      img: "https://pngimg.com/uploads/iphone16/iphone16_PNG13.png",
+      fallback: "assets/phones/oneplus-12.svg"
     }
   ];
 
@@ -83,26 +103,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const titleEl = document.getElementById('heroTitle');
     const subEl = document.getElementById('heroSubheading');
     const descEl = document.getElementById('heroDesc');
+    const priceEl = document.getElementById('heroPrice');
+    const origPriceEl = document.getElementById('heroOriginalPrice');
+    const badgeEl = document.getElementById('heroDiscountBadge');
+    const financeEl = document.getElementById('heroFinanceNote');
+    const priceBox = document.getElementById('heroPricingBox');
     const imgEl = document.getElementById('heroPhoneImg');
     const shopBtn = document.getElementById('heroShopBtn');
+    const cartBtn = document.getElementById('heroAddToCartBtn');
     
+    // Animate Image
     if (imgEl) {
       imgEl.classList.add('slide-fade-out');
       setTimeout(() => {
         imgEl.src = slide.img;
         imgEl.alt = slide.title;
+        imgEl.onerror = () => { imgEl.src = slide.fallback; };
         imgEl.classList.remove('slide-fade-out');
         imgEl.classList.add('slide-fade-in');
         setTimeout(() => imgEl.classList.remove('slide-fade-in'), 350);
       }, 200);
     }
     
+    // Animate Pricing Box
+    if (priceBox) {
+      priceBox.style.transform = 'translateY(6px)';
+      priceBox.style.opacity = '0.5';
+      setTimeout(() => {
+        priceBox.style.transform = 'translateY(0)';
+        priceBox.style.opacity = '1';
+      }, 200);
+    }
+
     if (tagEl) tagEl.textContent = slide.tag;
     if (titleEl) titleEl.textContent = slide.title;
     if (subEl) subEl.textContent = slide.subheading;
     if (descEl) descEl.textContent = slide.desc;
+    if (priceEl) priceEl.textContent = formatUSD(slide.price);
+    if (origPriceEl) origPriceEl.textContent = formatUSD(slide.originalPrice);
+    if (badgeEl) badgeEl.textContent = slide.discountText;
+    if (financeEl) financeEl.innerHTML = slide.financeText;
+    
     if (shopBtn) {
       shopBtn.setAttribute('onclick', `openProductDetail('${slide.id}')`);
+    }
+    if (cartBtn) {
+      cartBtn.setAttribute('onclick', `addToCart('${slide.id}')`);
     }
 
     // Update dots
@@ -139,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="card-photo-stage" onclick="openProductDetail('${phone.id}')">
-            <img class="card-phone-image" src="${phone.image}" alt="${phone.name}">
+            <img class="card-phone-image" src="${phone.image}" alt="${phone.name}" onerror="this.onerror=null; this.src='${phone.fallbackImage || 'assets/phones/iphone-16-pro.svg'}';">
           </div>
 
           <div class="card-item-title" onclick="openProductDetail('${phone.id}')">${phone.name}</div>
@@ -147,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="card-item-price-row">
             <span class="card-price-current">${formatUSD(phone.price)}</span>
+            ${phone.originalPrice ? `<span class="card-price-struck">${formatUSD(phone.originalPrice)}</span>` : ''}
           </div>
 
           <div class="card-item-rating">
@@ -179,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="card-photo-stage" onclick="openProductDetail('${phone.id}')">
-            <img class="card-phone-image" src="${phone.image}" alt="${phone.name}">
+            <img class="card-phone-image" src="${phone.image}" alt="${phone.name}" onerror="this.onerror=null; this.src='${phone.fallbackImage || 'assets/phones/iphone-15.svg'}';">
           </div>
 
           <div class="card-item-title" onclick="openProductDetail('${phone.id}')">${phone.name}</div>
@@ -283,12 +330,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Split Gallery & Main Image -->
         <div class="mobile-gallery-split">
           <div class="mobile-thumb-col">
-            <div class="mobile-thumb-box active"><img src="${p.image}"></div>
-            <div class="mobile-thumb-box"><img src="${p.image}"></div>
-            <div class="mobile-thumb-box"><img src="${p.image}"></div>
+            <div class="mobile-thumb-box active"><img src="${p.image}" onerror="this.onerror=null; this.src='${p.fallbackImage || 'assets/phones/iphone-16-pro.svg'}';"></div>
+            <div class="mobile-thumb-box"><img src="${p.image}" onerror="this.onerror=null; this.src='${p.fallbackImage || 'assets/phones/iphone-16-pro.svg'}';"></div>
+            <div class="mobile-thumb-box"><img src="${p.image}" onerror="this.onerror=null; this.src='${p.fallbackImage || 'assets/phones/iphone-16-pro.svg'}';"></div>
           </div>
           <div class="mobile-main-photo-stage">
-            <img src="${p.image}" alt="${p.name}">
+            <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='${p.fallbackImage || 'assets/phones/iphone-16-pro.svg'}';">
           </div>
         </div>
 
@@ -365,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="flex: 1; overflow-y: auto;">
           ${cartItems.map((item, idx) => `
             <div class="cart-list-item-row">
-              <img src="${item.image}" alt="${item.name}">
+              <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='assets/phones/iphone-16-pro.svg';">
               <div>
                 <div style="font-weight: 700; font-size: 0.9rem; color: #0f172a;">${item.name}</div>
                 <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.2rem;">${item.variant}</div>
