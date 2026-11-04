@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 400" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Titanium Edge Gradients -->
+    <linearGradient id="ti-frame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ded4c5"/>
+      <stop offset="30%" stop-color="#a89d8e"/>
+      <stop offset="60%" stop-color="#ded4c5"/>
+      <stop offset="100%" stop-color="#7a7063"/>
+    </linearGradient>
+
+    <!-- Frosted Natural Titanium Back -->
+    <linearGradient id="ti-glass-back" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#998e80"/>
+      <stop offset="50%" stop-color="#807567"/>
+      <stop offset="100%" stop-color="#665d50"/>
+    </linearGradient>
+
+    <!-- Screen iOS Wallpaper -->
+    <linearGradient id="screen-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a192f"/>
+      <stop offset="40%" stop-color="#1e3a8a"/>
+      <stop offset="70%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Lens Glint -->
+    <radialGradient id="glint" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="45%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#050811"/>
+    </radialGradient>
+
+    <filter id="soft-shadow" x="-15%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000000" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <!-- LEFT: iPhone Back View (Showing Titanium Finish & Triple Cameras) -->
+  <g transform="translate(60, 25)" filter="url(#soft-shadow)">
+    <!-- Titanium Outer Frame -->
+    <rect x="0" y="0" width="160" height="330" rx="36" fill="url(#ti-frame)"/>
+    <rect x="3" y="3" width="154" height="324" rx="33" fill="url(#ti-glass-back)"/>
+    
+    <!-- Camera Plateau -->
+    <rect x="12" y="14" width="76" height="82" rx="20" fill="#756b5f" opacity="0.9" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+    
+    <!-- Lens 1 (Top Left) -->
+    <circle cx="34" cy="36" r="16" fill="url(#ti-frame)"/>
+    <circle cx="34" cy="36" r="13" fill="url(#glint)"/>
+    <circle cx="30" cy="32" r="3" fill="#ffffff" opacity="0.6"/>
+
+    <!-- Lens 2 (Bottom Left) -->
+    <circle cx="34" cy="74" r="16" fill="url(#ti-frame)"/>
+    <circle cx="34" cy="74" r="13" fill="url(#glint)"/>
+    <circle cx="30" cy="70" r="3" fill="#ffffff" opacity="0.6"/>
+
+    <!-- Lens 3 (Center Right) -->
+    <circle cx="66" cy="55" r="16" fill="url(#ti-frame)"/>
+    <circle cx="66" cy="55" r="13" fill="url(#glint)"/>
+    <circle cx="62" cy="51" r="3" fill="#ffffff" opacity="0.6"/>
+
+    <!-- Flash & LiDAR -->
+    <circle cx="66" cy="30" r="6" fill="#fffbe8" stroke="#877d71" stroke-width="1"/>
+    <circle cx="66" cy="80" r="5" fill="#0f172a"/>
+
+    <!-- Apple Logo -->
+    <path d="M82 165 c-2.6 0-5.3-1.4-7.4-1.4s-4.6 1.4-7 1.4c-5.7 0-11.8-4.8-11.8-13.8 0-8.8 5.7-13.5 11.4-13.5 2.8 0 5.3 1.5 7.4 1.5 1.9 0 4.8-1.6 8-1.6 1.4 0 6.1 0.2 9.4 5-0.3 0.2-5.6 3.3-5.6 10 0 7.9 7 10.7 7.1 10.8-0.1 0.3-1.1 3.8-3.7 7.5-2.2 3.2-4.5 6.5-7.8 6.5z M79.5 137.2 c1.5-1.8 2.5-4.3 2.5-6.8-2.4 0.1-5.2 1.6-6.9 3.6-1.3 1.5-2.5 4.1-2.5 6.6 0.2 0 0.7 0.1 1.2 0.1 2.2 0 4.3-1.5 5.7-3.5z" fill="white" opacity="0.25"/>
+  </g>
+
+  <!-- RIGHT: iPhone Front View (Showing Edge-to-Edge Display & Dynamic Island) -->
+  <g transform="translate(230, 25)" filter="url(#soft-shadow)">
+    <!-- Titanium Outer Frame -->
+    <rect x="0" y="0" width="160" height="330" rx="36" fill="url(#ti-frame)"/>
+    <!-- Black Ultra-thin Bezel -->
+    <rect x="3" y="3" width="154" height="324" rx="33" fill="#000000"/>
+    <!-- OLED Screen Area -->
+    <rect x="6" y="6" width="148" height="318" rx="30" fill="url(#screen-gradient)"/>
+
+    <!-- Glass Glint Highlight Across Screen -->
+    <path d="M6 6 L154 6 L6 260 Z" fill="white" opacity="0.05"/>
+
+    <!-- Dynamic Island -->
+    <rect x="52" y="14" width="56" height="17" rx="8.5" fill="#000000"/>
+    <circle cx="94" cy="22.5" r="3.5" fill="#0b132b"/>
+
+    <!-- Screen Time Display -->
+    <text x="80" y="80" font-family="-apple-system, sans-serif" font-size="28" font-weight="700" fill="#ffffff" text-anchor="middle">9:41</text>
+
+    <!-- Bottom Home Bar -->
+    <rect x="55" y="316" width="50" height="3" rx="1.5" fill="#ffffff" opacity="0.7"/>
+  </g>
+</svg>

@@ -341,25 +341,67 @@ body {
   background: #ffffff;
 }
 
-/* Hero Right Phone Stage */
+/* Hero Right Phone Stage with Floating Motion & Ambient Glow */
 .hero-right-stage {
   position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 400px;
+}
+
+.hero-ambient-glow {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(37, 99, 235, 0.2) 50%, transparent 75%);
+  filter: blur(45px);
+  z-index: 1;
+  pointer-events: none;
+  animation: pulseGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(0.9) translate(-10px, 10px); opacity: 0.6; }
+  100% { transform: scale(1.15) translate(15px, -15px); opacity: 0.95; }
 }
 
 .hero-phone-render {
-  max-height: 380px;
+  max-height: 390px;
   max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.6));
-  transition: transform 0.4s var(--ease-spring);
+  filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.65));
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.25s ease, transform 0.4s var(--ease-spring);
+}
+
+.floating-phone {
+  animation: heroFloat 5.5s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(1.2deg);
+  }
+}
+
+.slide-fade-out {
+  opacity: 0 !important;
+  transform: translateY(20px) scale(0.92) !important;
+}
+
+.slide-fade-in {
+  opacity: 1 !important;
+  transform: translateY(0px) scale(1) !important;
 }
 
 .hero-banner-card:hover .hero-phone-render {
-  transform: scale(1.04) translateY(-4px);
+  filter: drop-shadow(0 30px 55px rgba(0, 0, 0, 0.8));
 }
 
 /* Circular Slide Nav Arrows on Bottom Right */
@@ -495,18 +537,18 @@ body {
   background: var(--bg-white);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.2rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: all 0.25s ease;
-  box-shadow: var(--shadow-sm);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
 
 .product-item-card:hover {
   border-color: #cbd5e1;
-  box-shadow: var(--shadow-card-hover);
-  transform: translateY(-4px);
+  box-shadow: 0 20px 35px -5px rgba(37, 99, 235, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
+  transform: translateY(-8px);
 }
 
 /* Card Badges & Favorite */
@@ -522,8 +564,10 @@ body {
   color: #ffffff;
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.2rem 0.6rem;
+  padding: 0.22rem 0.65rem;
   border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  letter-spacing: 0.02em;
 }
 
 .pill-badge-discount {
@@ -531,8 +575,10 @@ body {
   color: #ffffff;
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.2rem 0.55rem;
+  padding: 0.22rem 0.6rem;
   border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  letter-spacing: 0.02em;
 }
 
 .card-fav-btn {
@@ -547,32 +593,38 @@ body {
 
 .card-fav-btn:hover {
   color: #ef4444;
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
 
 .card-fav-btn.active {
   color: #ef4444;
 }
 
-/* Product Card Photo Stage */
+/* Product Card Photo Stage with Soft Contrast Circle */
 .card-photo-stage {
-  height: 180px;
+  height: 190px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0.5rem 0 1rem;
+  margin: 0.4rem 0 1.1rem;
   cursor: pointer;
+  position: relative;
+  background: radial-gradient(circle, #f1f5f9 0%, #f8fafc 55%, transparent 75%);
+  border-radius: 14px;
+  overflow: visible;
 }
 
 .card-phone-image {
-  max-height: 160px;
-  max-width: 85%;
+  max-height: 165px;
+  max-width: 90%;
   object-fit: contain;
-  transition: transform 0.3s var(--ease-spring);
+  filter: drop-shadow(0 10px 18px rgba(15, 23, 42, 0.09));
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
 }
 
 .product-item-card:hover .card-phone-image {
-  transform: scale(1.08);
+  transform: scale(1.08) translateY(-6px);
+  filter: drop-shadow(0 18px 26px rgba(15, 23, 42, 0.16));
 }
 
 /* Card Typography */
@@ -863,6 +915,45 @@ body {
 .newsletter-phones-img {
   max-height: 220px;
   object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.45));
+}
+
+.floating-fan {
+  animation: fanFloat 6s ease-in-out infinite 0.4s;
+}
+
+@keyframes fanFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(-1.5deg); }
+}
+
+.floating-newsletter {
+  animation: newsletterFloat 5s ease-in-out infinite 0.8s;
+}
+
+@keyframes newsletterFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px) scale(1.02); }
+}
+
+.pulse-script {
+  animation: scriptPulse 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes scriptPulse {
+  0% { text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+  100% { text-shadow: 0 0 28px rgba(56, 189, 248, 0.9), 0 0 45px rgba(37, 99, 235, 0.6); }
+}
+
+/* Cart Badge Bounce Animation */
+.badge-pop {
+  animation: badgeBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes badgeBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
 }
 
 .script-text-awaits {

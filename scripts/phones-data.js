@@ -17,7 +17,7 @@ window.TECHNOVA_DATA = {
       originalPrice: null,
       rating: 4.9,
       reviewsCount: "2.5k",
-      image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80",
+      image: "assets/phones/iphone-16-pro.svg",
       colors: ["#9a958e", "#2b2a29", "#c5b49e", "#f2f1ed"],
       colorNames: ["Natural Titanium", "Black Titanium", "Desert Titanium", "White Titanium"],
       specs: {
@@ -38,7 +38,7 @@ window.TECHNOVA_DATA = {
       originalPrice: null,
       rating: 4.8,
       reviewsCount: "1.8k",
-      image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+      image: "assets/phones/samsung-s24.svg",
       colors: ["#242528", "#8b8f97", "#50635c", "#7c6882"],
       colorNames: ["Phantom Black", "Marble Gray", "Jade Green", "Cobalt Violet"],
       specs: {
@@ -59,7 +59,7 @@ window.TECHNOVA_DATA = {
       originalPrice: null,
       rating: 4.6,
       reviewsCount: "1.2k",
-      image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+      image: "assets/phones/google-pixel-9.svg",
       colors: ["#2a2d32", "#ece7e2", "#8b948f", "#e8b8c8"],
       colorNames: ["Obsidian", "Porcelain", "Wintergreen", "Peony"],
       specs: {
@@ -80,7 +80,7 @@ window.TECHNOVA_DATA = {
       originalPrice: null,
       rating: 4.5,
       reviewsCount: "940",
-      image: "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?auto=format&fit=crop&w=600&q=80",
+      image: "assets/phones/oneplus-12.svg",
       colors: ["#254b38", "#1c1c1f", "#e5e7eb"],
       colorNames: ["Flowy Emerald", "Silky Black", "Glacial White"],
       specs: {
@@ -106,7 +106,7 @@ window.TECHNOVA_DATA = {
       originalPrice: 999.00,
       rating: 4.7,
       reviewsCount: "2.1k",
-      image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80",
+      image: "assets/phones/iphone-15.svg",
       colors: ["#c3d3db", "#e8c6ce", "#e3e5aa", "#2f3136"],
       colorNames: ["Pastel Blue", "Pink", "Yellow", "Black"],
       specs: {
@@ -128,7 +128,7 @@ window.TECHNOVA_DATA = {
       originalPrice: 899.00,
       rating: 4.6,
       reviewsCount: "1.5k",
-      image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80",
+      image: "assets/phones/samsung-s23.svg",
       colors: ["#dcd2e2", "#242528", "#ebe7dd", "#435248"],
       colorNames: ["Lavender", "Phantom Black", "Cream", "Green"],
       specs: {
@@ -150,7 +150,7 @@ window.TECHNOVA_DATA = {
       originalPrice: 799.00,
       rating: 4.6,
       reviewsCount: "1.1k",
-      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+      image: "assets/phones/google-pixel-8.svg",
       colors: ["#7d8680", "#242528", "#dfb8ab"],
       colorNames: ["Hazel", "Obsidian", "Rose"],
       specs: {
@@ -172,7 +172,7 @@ window.TECHNOVA_DATA = {
       originalPrice: 679.00,
       rating: 4.4,
       reviewsCount: "820",
-      image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+      image: "assets/phones/oneplus-nord-3.svg",
       colors: ["#1c1c1f", "#99b7a4"],
       colorNames: ["Tempest Gray", "Misty Green"],
       specs: {
@@ -193,7 +193,7 @@ window.TECHNOVA_DATA = {
       variant: "256GB • Blue",
       price: 1199.00,
       quantity: 1,
-      image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=200&q=80"
+      image: "assets/phones/iphone-16-pro.svg"
     },
     {
       id: "samsung-galaxy-s24",
@@ -201,7 +201,7 @@ window.TECHNOVA_DATA = {
       variant: "256GB • Black",
       price: 999.00,
       quantity: 1,
-      image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=200&q=80"
+      image: "assets/phones/samsung-s24.svg"
     },
     {
       id: "airpods-pro-2",
@@ -209,7 +209,7 @@ window.TECHNOVA_DATA = {
       variant: "White",
       price: 249.00,
       quantity: 1,
-      image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=200&q=80"
+      image: "assets/phones/airpods-pro-2.svg"
     }
   ],
 

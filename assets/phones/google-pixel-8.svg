@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 400" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="p8-frame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="50%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+
+    <!-- Hazel Back Glass -->
+    <linearGradient id="p8-back" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9ca89e"/>
+      <stop offset="50%" stop-color="#839185"/>
+      <stop offset="100%" stop-color="#6b7a6d"/>
+    </linearGradient>
+
+    <linearGradient id="p8-wallpaper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14532d"/>
+      <stop offset="40%" stop-color="#15803d"/>
+      <stop offset="80%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#86efac"/>
+    </linearGradient>
+
+    <radialGradient id="p8-lens" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="45%" stop-color="#14532d"/>
+      <stop offset="100%" stop-color="#021f0d"/>
+    </radialGradient>
+
+    <filter id="p8-shadow" x="-15%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- LEFT: Pixel 8 Back (Visor Bar Spanning Back) -->
+  <g transform="translate(60, 25)" filter="url(#p8-shadow)">
+    <rect x="0" y="0" width="160" height="330" rx="34" fill="url(#p8-frame)"/>
+    <rect x="3" y="3" width="154" height="324" rx="31" fill="url(#p8-back)"/>
+
+    <!-- Satin Aluminum Camera Bar -->
+    <rect x="3" y="38" width="154" height="44" fill="#a4b3a6" stroke="#5f6e61" stroke-width="1"/>
+    
+    <!-- Camera Cutout Pill -->
+    <rect x="22" y="46" width="60" height="28" rx="14" fill="#000000"/>
+    <circle cx="36" cy="60" r="9" fill="url(#p8-lens)"/>
+    <circle cx="68" cy="60" r="9" fill="url(#p8-lens)"/>
+
+    <!-- Flash -->
+    <circle cx="120" cy="60" r="5" fill="#fffbe8" stroke="#5f6e61" stroke-width="1"/>
+
+    <!-- Google 'G' Logo -->
+    <circle cx="80" cy="180" r="13" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.5"/>
+  </g>
+
+  <!-- RIGHT: Pixel 8 Front -->
+  <g transform="translate(230, 25)" filter="url(#p8-shadow)">
+    <rect x="0" y="0" width="160" height="330" rx="34" fill="url(#p8-frame)"/>
+    <rect x="2.5" y="2.5" width="155" height="325" rx="31.5" fill="#000000"/>
+    <rect x="5" y="5" width="150" height="320" rx="29" fill="url(#p8-wallpaper)"/>
+
+    <circle cx="80" cy="18" r="4" fill="#000000"/>
+    <circle cx="80" cy="18" r="2.5" fill="#14532d"/>
+
+    <text x="80" y="80" font-family="-apple-system, sans-serif" font-size="28" font-weight="700" fill="#ffffff" text-anchor="middle">10:00</text>
+    <rect x="60" y="316" width="40" height="3" rx="1.5" fill="#ffffff" opacity="0.7"/>
+  </g>
+</svg>

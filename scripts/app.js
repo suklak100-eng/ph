@@ -23,11 +23,104 @@ document.addEventListener('DOMContentLoaded', () => {
   // Currency Formatter
   const formatUSD = (val) => '$' + Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-  // Update header cart count
+  // Update header cart count with dynamic bounce animation
   const updateCartBadge = () => {
     const totalCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-    if (headerCartCount) headerCartCount.textContent = totalCount;
+    if (headerCartCount) {
+      headerCartCount.textContent = totalCount;
+      headerCartCount.classList.remove('badge-pop');
+      void headerCartCount.offsetWidth; // trigger reflow
+      headerCartCount.classList.add('badge-pop');
+    }
   };
+
+  // =========================================================================
+  // HERO CAROUSEL CONTROLLER
+  // =========================================================================
+  const heroSlides = [
+    {
+      id: "iphone-16-pro",
+      tag: "New Arrival",
+      title: "iPhone 16 Pro",
+      subheading: "More Power. More Possibilities.",
+      desc: "Discover the latest iPhone with advanced camera, longer battery life and a stunning titanium design.",
+      img: "assets/phones/hero-iphone-16-pro.svg"
+    },
+    {
+      id: "samsung-galaxy-s24",
+      tag: "Galaxy AI Era",
+      title: "Galaxy S24",
+      subheading: "Epic, Just Like That.",
+      desc: "Search like never before with Circle to Search, get real-time voice translation, and take studio-grade night shots.",
+      img: "assets/phones/samsung-s24.svg"
+    },
+    {
+      id: "oneplus-12",
+      tag: "Flagship Killer",
+      title: "OnePlus 12",
+      subheading: "Smooth Beyond Belief.",
+      desc: "Snapdragon 8 Gen 3 with 5400mAh battery, 100W SUPERVOOC charging, and 4th Gen Hasselblad Camera System.",
+      img: "assets/phones/oneplus-12.svg"
+    },
+    {
+      id: "google-pixel-9",
+      tag: "Built by Google",
+      title: "Pixel 9",
+      subheading: "Engineered with Gemini AI.",
+      desc: "Super fast Google Tensor G4 chip, pro-level photos, and magical AI editing features right in your hands.",
+      img: "assets/phones/google-pixel-9.svg"
+    }
+  ];
+
+  let currentHeroIdx = 0;
+  let heroTimer = null;
+
+  window.switchHeroSlide = (idx) => {
+    currentHeroIdx = (idx + heroSlides.length) % heroSlides.length;
+    const slide = heroSlides[currentHeroIdx];
+    
+    const tagEl = document.getElementById('heroTag');
+    const titleEl = document.getElementById('heroTitle');
+    const subEl = document.getElementById('heroSubheading');
+    const descEl = document.getElementById('heroDesc');
+    const imgEl = document.getElementById('heroPhoneImg');
+    const shopBtn = document.getElementById('heroShopBtn');
+    
+    if (imgEl) {
+      imgEl.classList.add('slide-fade-out');
+      setTimeout(() => {
+        imgEl.src = slide.img;
+        imgEl.alt = slide.title;
+        imgEl.classList.remove('slide-fade-out');
+        imgEl.classList.add('slide-fade-in');
+        setTimeout(() => imgEl.classList.remove('slide-fade-in'), 350);
+      }, 200);
+    }
+    
+    if (tagEl) tagEl.textContent = slide.tag;
+    if (titleEl) titleEl.textContent = slide.title;
+    if (subEl) subEl.textContent = slide.subheading;
+    if (descEl) descEl.textContent = slide.desc;
+    if (shopBtn) {
+      shopBtn.setAttribute('onclick', `openProductDetail('${slide.id}')`);
+    }
+
+    // Update dots
+    document.querySelectorAll('#heroDots .carousel-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentHeroIdx);
+    });
+
+    resetHeroAutoPlay();
+  };
+
+  window.nextHeroSlide = () => window.switchHeroSlide(currentHeroIdx + 1);
+  window.prevHeroSlide = () => window.switchHeroSlide(currentHeroIdx - 1);
+
+  const resetHeroAutoPlay = () => {
+    if (heroTimer) clearInterval(heroTimer);
+    heroTimer = setInterval(window.nextHeroSlide, 5500);
+  };
+  resetHeroAutoPlay();
 
   // =========================================================================
   // RENDER POPULAR SMARTPHONES (Row 1 from TechNova Mockup)
@@ -469,7 +562,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- Gift Box Graphic from Mockup -->
           <div style="margin-top: 2rem; position: relative; text-align: center;">
-            <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=300&q=80" style="height: 130px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));">
+            <img src="assets/phones/iphone-15.svg" style="height: 140px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));">
             <div style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #2563eb; margin-top: 0.5rem;">
               Enjoy your new phone! ♡
             </div>

@@ -72,40 +72,42 @@
         
         <!-- Hero Left Content -->
         <div class="hero-left-content">
-          <div class="hero-new-arrival-tag">New Arrival</div>
-          <h1 class="hero-phone-title">iPhone 16 Pro</h1>
-          <div class="hero-phone-subheading">More Power. More Possibilities.</div>
-          <p class="hero-phone-desc">
+          <div class="hero-new-arrival-tag" id="heroTag">New Arrival</div>
+          <h1 class="hero-phone-title" id="heroTitle">iPhone 16 Pro</h1>
+          <div class="hero-phone-subheading" id="heroSubheading">More Power. More Possibilities.</div>
+          <p class="hero-phone-desc" id="heroDesc">
             Discover the latest iPhone with advanced camera, longer battery life and a stunning design.
           </p>
-          <a href="javascript:void(0)" class="btn-shop-now" onclick="openProductDetail('iphone-16-pro');">
+          <a href="javascript:void(0)" class="btn-shop-now" id="heroShopBtn" onclick="openProductDetail('iphone-16-pro');">
             <span>Shop Now</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
 
-          <!-- Carousel Dots Bottom Left (4 dots, 1st active) -->
-          <div class="hero-carousel-dots">
-            <div class="carousel-dot active"></div>
-            <div class="carousel-dot"></div>
-            <div class="carousel-dot"></div>
-            <div class="carousel-dot"></div>
+          <!-- Carousel Dots Bottom Left (4 dots) -->
+          <div class="hero-carousel-dots" id="heroDots">
+            <div class="carousel-dot active" onclick="switchHeroSlide(0)"></div>
+            <div class="carousel-dot" onclick="switchHeroSlide(1)"></div>
+            <div class="carousel-dot" onclick="switchHeroSlide(2)"></div>
+            <div class="carousel-dot" onclick="switchHeroSlide(3)"></div>
           </div>
         </div>
 
-        <!-- Hero Right iPhone 16 Pro Render -->
+        <!-- Hero Right Phone Stage with Floating Motion & Ambient Glow -->
         <div class="hero-right-stage">
+          <div class="hero-ambient-glow"></div>
           <img 
-            src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=800&q=80" 
+            id="heroPhoneImg"
+            src="assets/phones/hero-iphone-16-pro.svg" 
             alt="Apple iPhone 16 Pro Natural Titanium" 
-            class="hero-phone-render"
+            class="hero-phone-render floating-phone"
           />
 
           <!-- Translucent Circular Nav Arrows on Bottom Right -->
           <div class="hero-nav-arrows">
-            <button class="arrow-circle-btn" title="Previous Slide">
+            <button class="arrow-circle-btn" title="Previous Slide" onclick="prevHeroSlide()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
-            <button class="arrow-circle-btn" title="Next Slide">
+            <button class="arrow-circle-btn" title="Next Slide" onclick="nextHeroSlide()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
           </div>
@@ -203,11 +205,11 @@
 
         <div class="offer-right-box">
           <img 
-            src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80" 
+            src="assets/phones/oneplus-12.svg" 
             alt="Smartphones Fan" 
-            class="offer-phones-fan-img"
+            class="offer-phones-fan-img floating-fan"
           />
-          <div class="script-text-smarter">Better Faster Smarter ♡</div>
+          <div class="script-text-smarter pulse-script">Better Faster Smarter ♡</div>
         </div>
 
       </div>
@@ -330,11 +332,11 @@
 
         <div class="newsletter-right">
           <img 
-            src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=700&q=80" 
+            src="assets/phones/iphone-15.svg" 
             alt="Dual iPhones" 
-            class="newsletter-phones-img"
+            class="newsletter-phones-img floating-newsletter"
           />
-          <div class="script-text-awaits">Your Next Phone Awaits ♡</div>
+          <div class="script-text-awaits pulse-script">Your Next Phone Awaits ♡</div>
         </div>
 
       </div>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Case Gradient -->
+    <linearGradient id="ap-case-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="ap-rim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <filter id="ap-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#0f172a" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#ap-shadow)">
+    <!-- Case Open Lower Body -->
+    <rect x="75" y="120" width="150" height="110" rx="36" fill="url(#ap-case-body)" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Lid Open Back Hinge -->
+    <rect x="135" y="112" width="30" height="6" rx="2" fill="#94a3b8"/>
+    <!-- LED Indicator -->
+    <circle cx="150" cy="155" r="2.5" fill="#22c55e"/>
+
+    <!-- Left Earbud Stem & Head -->
+    <g transform="translate(95, 60)">
+      <rect x="12" y="30" width="8" height="40" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+      <ellipse cx="16" cy="22" rx="14" ry="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+      <!-- Silicone Tip -->
+      <ellipse cx="6" cy="20" rx="8" ry="11" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+      <!-- Mesh Vent -->
+      <ellipse cx="20" cy="18" rx="3.5" ry="5.5" fill="#334155"/>
+      <rect x="13.5" y="65" width="5" height="3" rx="1" fill="#cbd5e1"/>
+    </g>
+
+    <!-- Right Earbud Stem & Head -->
+    <g transform="translate(165, 60)">
+      <rect x="10" y="30" width="8" height="40" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+      <ellipse cx="14" cy="22" rx="14" ry="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+      <!-- Silicone Tip -->
+      <ellipse cx="24" cy="20" rx="8" ry="11" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+      <!-- Mesh Vent -->
+      <ellipse cx="10" cy="18" rx="3.5" ry="5.5" fill="#334155"/>
+      <rect x="11.5" y="65" width="5" height="3" rx="1" fill="#cbd5e1"/>
+    </g>
+  </g>
+</svg>
