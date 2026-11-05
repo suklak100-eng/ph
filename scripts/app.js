@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
       price: 1149.00,
       originalPrice: 1299.00,
       discountText: "SAVE $150 (12% OFF)",
-      financeText: "Or from <strong>$47.88/mo.</strong> with 0% EMI • Book online & collect at our showroom today",
-      img: "https://pngimg.com/uploads/iphone16/iphone16_PNG38.png",
+      financeText: "Or from <strong>$47.88/mo.</strong> with 0% EMI • Reserve online with $0 upfront & test in showroom today",
+      img: "https://upload.wikimedia.org/wikipedia/commons/e/e2/IPhone_15.png",
       fallback: "assets/phones/hero-iphone-16-pro.svg"
     },
     {
@@ -61,20 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
       originalPrice: 1299.00,
       discountText: "SAVE $200 (15% OFF)",
       financeText: "Or from <strong>$45.79/mo.</strong> with 0% EMI • Available in Titanium Black & Gray",
-      img: "https://pngimg.com/uploads/smartphone/smartphone_PNG8494.png",
+      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Samsung_Galaxy_S24_Ultra_2024.jpg/800px-Samsung_Galaxy_S24_Ultra_2024.jpg",
       fallback: "assets/phones/samsung-s24.svg"
     },
     {
       id: "google-pixel-9",
       tag: "Built by Google",
-      title: "Google Pixel 9 Pro",
+      title: "Google Pixel 9 Pro XL",
       subheading: "Engineered with Gemini AI & Iconic Visor.",
       desc: "Google Tensor G4, 16GB RAM for on-device AI, pro triple-lens camera with 30x Super Res Zoom, and 7 years of Pixel Feature Drops.",
       price: 799.00,
       originalPrice: 949.00,
       discountText: "SAVE $150 (16% OFF)",
       financeText: "Or from <strong>$33.29/mo.</strong> with 0% EMI • Free Google One AI Premium trial",
-      img: "https://www.pngarts.com/files/11/Google-Pixel-Phone-Front-PNG-High-Quality-Image.png",
+      img: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Google_Pixel_9_Pro_XL_%28front%29.jpg",
       fallback: "assets/phones/google-pixel-9.svg"
     },
     {
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
       originalPrice: 899.00,
       discountText: "SAVE $130 (15% OFF)",
       financeText: "Or from <strong>$32.04/mo.</strong> with 0% EMI • Includes 100W Power Adapter in box",
-      img: "https://pngimg.com/uploads/iphone16/iphone16_PNG13.png",
+      img: "https://upload.wikimedia.org/wikipedia/commons/8/8e/OnePlus_9_Pro_back.jpg",
       fallback: "assets/phones/oneplus-12.svg"
     }
   ];
@@ -145,10 +145,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (financeEl) financeEl.innerHTML = slide.financeText;
     
     if (shopBtn) {
-      shopBtn.setAttribute('onclick', `openProductDetail('${slide.id}')`);
+      shopBtn.href = `product.html?id=${slide.id}&reserve=true`;
+      shopBtn.removeAttribute('onclick');
     }
     if (cartBtn) {
-      cartBtn.setAttribute('onclick', `addToCart('${slide.id}')`);
+      cartBtn.setAttribute('onclick', `window.location.href='product.html?id=${slide.id}'`);
     }
 
     // Update dots
@@ -168,45 +169,56 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   resetHeroAutoPlay();
 
+  // Helper function to build a card HTML
+  const buildCardHtml = (phone) => {
+    const isFav = favorites.has(phone.id);
+    const savings = phone.originalPrice ? phone.originalPrice - phone.price : 0;
+    return `
+      <div class="product-item-card" onclick="window.location.href='product.html?id=${phone.id}';">
+        <div class="card-top-action-row">
+          ${phone.badge ? `<span class="pill-badge-bestseller" style="background: ${phone.badgeType === 'discount' ? '#ef4444' : '#2563eb'};">${phone.badge}</span>` : '<div></div>'}
+          <button class="card-fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${phone.id}', event)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </button>
+        </div>
+
+        <div class="card-photo-stage">
+          <img class="card-phone-image" src="${phone.image}" alt="${phone.name}" onerror="this.onerror=null; this.src='assets/phones/hero-iphone-16-pro.svg';">
+        </div>
+
+        <a href="product.html?id=${phone.id}" class="card-item-title" onclick="event.stopPropagation();">${phone.name}</a>
+        <div class="card-item-storage">${phone.storage}</div>
+
+        <div class="card-item-price-row">
+          <span class="card-price-current">${formatUSD(phone.price)}</span>
+          ${phone.originalPrice ? `<span class="card-price-struck">${formatUSD(phone.originalPrice)}</span>` : ''}
+          ${savings > 0 ? `<span class="card-save-tag">SAVE ${formatUSD(savings)}</span>` : ''}
+        </div>
+
+        <div class="card-item-rating">
+          <span class="star-icons-wrap">★★★★★</span>
+          <span>${phone.rating} (${phone.reviewsCount})</span>
+        </div>
+
+        <div class="card-btn-cluster" onclick="event.stopPropagation();">
+          <a href="product.html?id=${phone.id}&reserve=true" class="btn-card-pickup">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+            <span>Book Pickup ($0)</span>
+          </a>
+          <a href="product.html?id=${phone.id}" class="btn-card-view-specs" title="View 3 Photos & Specifications">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          </a>
+        </div>
+      </div>
+    `;
+  };
+
   // =========================================================================
   // RENDER POPULAR SMARTPHONES (Row 1 from TechNova Mockup)
   // =========================================================================
-  const renderPopularPhones = () => {
+  const renderPopularPhones = (phonesList = data.popularPhones) => {
     if (!popularGrid) return;
-    popularGrid.innerHTML = data.popularPhones.map(phone => {
-      const isFav = favorites.has(phone.id);
-      return `
-        <div class="product-item-card">
-          <div class="card-top-action-row">
-            ${phone.badge ? `<span class="pill-badge-bestseller">${phone.badge}</span>` : '<div></div>'}
-            <button class="card-fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${phone.id}', event)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
-
-          <div class="card-photo-stage" onclick="openProductDetail('${phone.id}')">
-            <img class="card-phone-image" src="${phone.image}" alt="${phone.name}" onerror="this.onerror=null; this.src='${phone.fallbackImage || 'assets/phones/iphone-16-pro.svg'}';">
-          </div>
-
-          <div class="card-item-title" onclick="openProductDetail('${phone.id}')">${phone.name}</div>
-          <div class="card-item-storage">${phone.storage}</div>
-
-          <div class="card-item-price-row">
-            <span class="card-price-current">${formatUSD(phone.price)}</span>
-            ${phone.originalPrice ? `<span class="card-price-struck">${formatUSD(phone.originalPrice)}</span>` : ''}
-          </div>
-
-          <div class="card-item-rating">
-            <span class="star-icons-wrap">★★★★☆</span>
-            <span>${phone.rating} (${phone.reviewsCount})</span>
-          </div>
-
-          <button class="btn-card-add-cart" onclick="addToCart('${phone.id}')">
-            Add to Cart
-          </button>
-        </div>
-      `;
-    }).join('');
+    popularGrid.innerHTML = phonesList.map(buildCardHtml).join('');
   };
 
   // =========================================================================
@@ -214,40 +226,38 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   const renderBestDeals = () => {
     if (!bestDealsGrid) return;
-    bestDealsGrid.innerHTML = data.bestDeals.map(phone => {
-      const isFav = favorites.has(phone.id);
-      return `
-        <div class="product-item-card">
-          <div class="card-top-action-row">
-            <span class="pill-badge-discount">${phone.badge}</span>
-            <button class="card-fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${phone.id}', event)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </button>
-          </div>
+    bestDealsGrid.innerHTML = data.bestDeals.map(buildCardHtml).join('');
+  };
 
-          <div class="card-photo-stage" onclick="openProductDetail('${phone.id}')">
-            <img class="card-phone-image" src="${phone.image}" alt="${phone.name}" onerror="this.onerror=null; this.src='${phone.fallbackImage || 'assets/phones/iphone-15.svg'}';">
-          </div>
+  // Showroom Filter Chips Action
+  window.filterCatalog = (filter, chipEl) => {
+    if (window.soundEngine) window.soundEngine.playTick();
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    if (chipEl) chipEl.classList.add('active');
 
-          <div class="card-item-title" onclick="openProductDetail('${phone.id}')">${phone.name}</div>
-          <div class="card-item-storage">${phone.storage}</div>
+    let filtered = [...data.popularPhones];
+    const all = [...data.popularPhones, ...data.bestDeals];
 
-          <div class="card-item-price-row">
-            <span class="card-price-current">${formatUSD(phone.price)}</span>
-            <span class="card-price-struck">${formatUSD(phone.originalPrice)}</span>
-          </div>
+    if (filter === 'apple') {
+      filtered = all.filter(p => p.brand === 'Apple');
+    } else if (filter === 'samsung') {
+      filtered = all.filter(p => p.brand === 'Samsung');
+    } else if (filter === 'google') {
+      filtered = all.filter(p => p.brand === 'Google');
+    } else if (filter === 'oneplus') {
+      filtered = all.filter(p => p.brand === 'OnePlus');
+    } else if (filter === 'deals') {
+      filtered = all.filter(p => p.price < 700);
+    } else {
+      filtered = [...data.popularPhones];
+    }
 
-          <div class="card-item-rating">
-            <span class="star-icons-wrap">★★★★☆</span>
-            <span>${phone.rating} (${phone.reviewsCount})</span>
-          </div>
+    renderPopularPhones(filtered);
+  };
 
-          <button class="btn-card-add-cart" onclick="addToCart('${phone.id}')">
-            Add to Cart
-          </button>
-        </div>
-      `;
-    }).join('');
+  // Direct open details link
+  window.openProductDetail = (id) => {
+    window.location.href = `product.html?id=${id}`;
   };
 
   // Toggle favorite
